@@ -16,7 +16,6 @@
 
 #include <sstream>
 #include <fstream>
-#include <string_view>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -61,7 +60,7 @@ using os_string = std::wstring;
 using os_string = std::string;
 #endif
 
-os_string to_osstring(std::string_view utf8_str)
+os_string to_osstring(const std::string& utf8_str)
 {
 #ifdef _WIN32
     int len = MultiByteToWideChar(CP_UTF8, 0, utf8_str.data(), (int)utf8_str.size(), nullptr, 0);
