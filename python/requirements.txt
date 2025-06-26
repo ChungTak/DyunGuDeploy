@@ -1,0 +1,8 @@
+wheel
+requests
+tqdm
+numpy
+opencv-python
+fastdeploy-tools>=0.0.5
+pyyaml
+fastapi
