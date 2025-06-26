@@ -12,7 +12,7 @@ RKNPU2指的是Rockchip推出的RK356X以及RK3588系列芯片的NPU。
 
 | 工具名          | 是否必须 | 安装设备  | 用途                              |  
 |--------------|------|-------|---------------------------------|
-| Paddle2ONNX  | 必装   | PC    | 用于转换PaddleInference模型到ONNX模型    |  
+| 必装   | PC    | 用于转换PaddleInference模型到ONNX模型    |  
 | RKNNToolkit2 | 必装   | PC    | 用于转换ONNX模型到rknn模型               |  
 | RKNPU2       | 选装   | Board | RKNPU2的基础驱动，FastDeploy已经集成，可以不装 |
 

@@ -461,7 +461,6 @@ set PATH=%FASTDEPLOY_HOME%\third_libs\install\opencv-win-x64-3.4.16\build\x64\vc
 set PATH=%FASTDEPLOY_HOME%\third_libs\install\paddle_inference\paddle\lib;%PATH%
 set PATH=%FASTDEPLOY_HOME%\third_libs\install\paddle_inference\third_party\install\mkldnn\lib;%PATH%
 set PATH=%FASTDEPLOY_HOME%\third_libs\install\paddle_inference\third_party\install\mklml\lib;%PATH%
-set PATH=%FASTDEPLOY_HOME%\third_libs\install\paddle2onnx\lib;%PATH%
 set PATH=%FASTDEPLOY_HOME%\third_libs\install\tensorrt\lib;%PATH%
 set PATH=%FASTDEPLOY_HOME%\third_libs\install\faster_tokenizer\lib;%PATH%
 set PATH=%FASTDEPLOY_HOME%\third_libs\install\faster_tokenizer\third_party\lib;%PATH%
@@ -503,7 +502,6 @@ copy /Y %FASTDEPLOY_HOME%\third_libs\install\opencv-win-x64-3.4.16\build\x64\vc1
 copy /Y %FASTDEPLOY_HOME%\third_libs\install\paddle_inference\paddle\lib\*.dll Release\
 copy /Y %FASTDEPLOY_HOME%\third_libs\install\paddle_inference\third_party\install\mkldnn\lib\*.dll Release\
 copy /Y %FASTDEPLOY_HOME%\third_libs\install\paddle_inference\third_party\install\mklml\lib\*.dll Release\
-copy /Y %FASTDEPLOY_HOME%\third_libs\install\paddle2onnx\lib\*.dll Release\
 copy /Y %FASTDEPLOY_HOME%\third_libs\install\tensorrt\lib\*.dll Release\
 copy /Y %FASTDEPLOY_HOME%\third_libs\install\faster_tokenizer\lib\*.dll Release\
 copy /Y %FASTDEPLOY_HOME%\third_libs\install\faster_tokenizer\third_party\lib\*.dll Release\

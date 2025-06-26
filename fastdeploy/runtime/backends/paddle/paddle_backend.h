@@ -21,9 +21,6 @@
 
 #include "fastdeploy/runtime/backends/backend.h"
 #include "fastdeploy/runtime/backends/paddle/option.h"
-#ifdef ENABLE_PADDLE2ONNX
-#include "paddle2onnx/converter.h"
-#endif
 #include "fastdeploy/utils/unique_ptr.h"
 #include "paddle/include/paddle_inference_api.h"  // NOLINT
 

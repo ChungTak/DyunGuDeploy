@@ -130,7 +130,7 @@ CC=/opt/gcc-9.4.0/bin/gcc CXX=/opt/gcc-9.4.0/bin/g++ cmake .. \
   -DENABLE_OPENVINO_BACKEND=ON \
   -DENABLE_VISION=ON \
   -DBUILD_FASTDEPLOY_PYTHON=OFF \
-  -DENABLE_PADDLE2ONNX=ON \
+  
   -DENABLE_TEXT=OFF \
   -DLIBRARY_NAME=fastdeploy_runtime
 make -j8

@@ -17,9 +17,7 @@
 #cmakedefine FASTDEPLOY_LIB
 #endif
 
-#ifndef ENABLE_PADDLE2ONNX
-#cmakedefine ENABLE_PADDLE2ONNX
-#endif
+
 
 #ifndef ENABLE_ORT_BACKEND
 #cmakedefine ENABLE_ORT_BACKEND

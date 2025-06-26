@@ -10,7 +10,7 @@ If you want to use the Horizon inference engine in FastDeploy, you need to confi
 
 | Tools                | Yes/No                   | Platform | Description                                         |
 |:------------------|:---------------------|:-------|---------------------------------|
-| Paddle2ONNX  | Yes   | PC    | Used to convert PaddleInference models to ONNX models    |  
+| Yes   | PC    | Used to convert PaddleInference models to ONNX models    |  
 | Horizon Environments Docker | Yes   | PC    | Used to convert ONNX models to Horizon models               |  
 | Horizon XJ3 OpenExplorer       | Yes   | PC | header files and dynamic libraries |
 

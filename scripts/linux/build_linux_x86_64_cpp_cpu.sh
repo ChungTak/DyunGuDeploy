@@ -64,7 +64,7 @@ __build_fastdeploy_linux_x86_64_shared() {
         -DENABLE_ORT_BACKEND=ON \
         -DENABLE_PADDLE_BACKEND=OFF \
         -DENABLE_OPENVINO_BACKEND=OFF \
-        -DENABLE_PADDLE2ONNX=ON \
+        
         -DENABLE_VISION=OFF \
         -DENABLE_BENCHMARK=OFF \
         -DENABLE_FLYCV=OFF \
@@ -86,7 +86,7 @@ __build_fastdeploy_linux_x86_64_shared_custom_paddle() {
         -DENABLE_ORT_BACKEND=ON \
         -DENABLE_PADDLE_BACKEND=OFF \
         -DENABLE_OPENVINO_BACKEND=OFF \
-        -DENABLE_PADDLE2ONNX=ON \
+        
         -DENABLE_VISION=OFF \
         -DENABLE_BENCHMARK=OFF \
         -DPADDLEINFERENCE_DIRECTORY=${PADDLEINFERENCE_DIRECTORY} \

@@ -70,7 +70,7 @@ __build_fastdeploy_linux_x86_64_gpu_shared() {
         -DENABLE_TRT_BACKEND=OFF \
         -DENABLE_PADDLE_BACKEND=ON \
         -DENABLE_OPENVINO_BACKEND=ON \
-        -DENABLE_PADDLE2ONNX=ON \
+        
         -DENABLE_VISION=ON \
         -DENABLE_BENCHMARK=ON \
         -DBUILD_EXAMPLES=OFF \
@@ -95,7 +95,7 @@ __build_fastdeploy_linux_x86_64_gpu_shared_custom_paddle() {
         -DPADDLEINFERENCE_VERSION=${PADDLEINFERENCE_VERSION} \
         -DPADDLEINFERENCE_API_CUSTOM_OP=${PADDLEINFERENCE_API_CUSTOM_OP:-"OFF"} \
         -DENABLE_OPENVINO_BACKEND=ON \
-        -DENABLE_PADDLE2ONNX=ON \
+        
         -DENABLE_VISION=ON \
         -DENABLE_BENCHMARK=ON \
         -DBUILD_EXAMPLES=OFF \

@@ -20,9 +20,6 @@
 #include "NvInferRuntime.h"
 #include "fastdeploy/function/cuda_cast.h"
 #include "fastdeploy/utils/utils.h"
-#ifdef ENABLE_PADDLE2ONNX
-#include "paddle2onnx/converter.h"
-#endif
 
 namespace fastdeploy {
 
@@ -173,51 +170,7 @@ bool TrtBackend::InitFromPaddle(const std::string& model_buffer,
     return false;
   }
   option_ = option;
-
-#ifdef ENABLE_PADDLE2ONNX
-  std::vector<paddle2onnx::CustomOp> ops;
-  ops.resize(1);
-  strcpy(ops[0].op_name, "pool2d");
-  strcpy(ops[0].export_op_name, "AdaptivePool2d");
-  char* model_content_ptr;
-  int model_content_size = 0;
-  char* calibration_cache_ptr;
-  int calibration_cache_size = 0;
-  if (!paddle2onnx::Export(model_buffer.c_str(), model_buffer.size(),
-                           params_buffer.c_str(), params_buffer.size(),
-                           &model_content_ptr, &model_content_size, 11, true,
-                           verbose, true, true, true, ops.data(), 1, "tensorrt",
-                           &calibration_cache_ptr, &calibration_cache_size, "",
-                           &save_external_)) {
-    FDERROR << "Error occured while export PaddlePaddle to ONNX format."
-            << std::endl;
-    return false;
-  }
-  std::string onnx_model_proto(model_content_ptr,
-                               model_content_ptr + model_content_size);
-  delete[] model_content_ptr;
-  model_content_ptr = nullptr;
-  if (calibration_cache_size) {
-    std::string calibration_str(calibration_cache_ptr,
-                                calibration_cache_ptr + calibration_cache_size);
-    calibration_str_ = calibration_str;
-    delete[] calibration_cache_ptr;
-  }
-  if (save_external_) {
-    model_file_name_ = "model.onnx";
-    std::fstream f(model_file_name_, std::ios::out);
-    FDASSERT(f.is_open(), "Can not open file: %s to save model.",
-             model_file_name_.c_str());
-    f << onnx_model_proto;
-    f.close();
-  }
-  return InitFromOnnx(onnx_model_proto, option);
-#else
-  FDERROR << "Didn't compile with PaddlePaddle frontend, you can try to "
-             "call `InitFromOnnx` instead."
-          << std::endl;
   return false;
-#endif
 }
 
 bool TrtBackend::InitFromOnnx(const std::string& model_buffer,
@@ -235,53 +188,54 @@ bool TrtBackend::InitFromOnnx(const std::string& model_buffer,
   // This part of code will record the original outputs order
   // because the converted tensorrt network may exist wrong order of outputs
   outputs_order_.clear();
-  auto onnx_reader =
-      paddle2onnx::OnnxReader(onnx_content.c_str(), onnx_content.size());
-  for (int i = 0; i < onnx_reader.num_outputs; ++i) {
-    std::string name(onnx_reader.outputs[i].name);
-    outputs_order_[name] = i;
-  }
+  //TODO 
+  // auto onnx_reader =
+  //     paddle2onnx::OnnxReader(onnx_content.c_str(), onnx_content.size());
+  // for (int i = 0; i < onnx_reader.num_outputs; ++i) {
+  //   std::string name(onnx_reader.outputs[i].name);
+  //   outputs_order_[name] = i;
+  // }
 
-  shape_range_info_.clear();
-  inputs_desc_.clear();
-  outputs_desc_.clear();
-  inputs_desc_.resize(onnx_reader.num_inputs);
-  outputs_desc_.resize(onnx_reader.num_outputs);
-  for (int i = 0; i < onnx_reader.num_inputs; ++i) {
-    std::string name(onnx_reader.inputs[i].name);
-    std::vector<int64_t> shape(
-        onnx_reader.inputs[i].shape,
-        onnx_reader.inputs[i].shape + onnx_reader.inputs[i].rank);
-    inputs_desc_[i].name = name;
-    inputs_desc_[i].shape.assign(shape.begin(), shape.end());
-    inputs_desc_[i].dtype = ReaderDtypeToTrtDtype(onnx_reader.inputs[i].dtype);
-    inputs_desc_[i].original_dtype =
-        ReaderDtypeToFDDtype(onnx_reader.inputs[i].dtype);
-    auto info = ShapeRangeInfo(shape);
-    info.name = name;
-    auto iter_min = option.min_shape.find(name);
-    auto iter_max = option.max_shape.find(name);
-    auto iter_opt = option.opt_shape.find(name);
-    if (iter_min != option.min_shape.end()) {
-      info.min.assign(iter_min->second.begin(), iter_min->second.end());
-      info.max.assign(iter_max->second.begin(), iter_max->second.end());
-      info.opt.assign(iter_opt->second.begin(), iter_opt->second.end());
-    }
-    shape_range_info_.insert(std::make_pair(name, info));
-  }
+  // shape_range_info_.clear();
+  // inputs_desc_.clear();
+  // outputs_desc_.clear();
+  // inputs_desc_.resize(onnx_reader.num_inputs);
+  // outputs_desc_.resize(onnx_reader.num_outputs);
+  // for (int i = 0; i < onnx_reader.num_inputs; ++i) {
+  //   std::string name(onnx_reader.inputs[i].name);
+  //   std::vector<int64_t> shape(
+  //       onnx_reader.inputs[i].shape,
+  //       onnx_reader.inputs[i].shape + onnx_reader.inputs[i].rank);
+  //   inputs_desc_[i].name = name;
+  //   inputs_desc_[i].shape.assign(shape.begin(), shape.end());
+  //   inputs_desc_[i].dtype = ReaderDtypeToTrtDtype(onnx_reader.inputs[i].dtype);
+  //   inputs_desc_[i].original_dtype =
+  //       ReaderDtypeToFDDtype(onnx_reader.inputs[i].dtype);
+  //   auto info = ShapeRangeInfo(shape);
+  //   info.name = name;
+  //   auto iter_min = option.min_shape.find(name);
+  //   auto iter_max = option.max_shape.find(name);
+  //   auto iter_opt = option.opt_shape.find(name);
+  //   if (iter_min != option.min_shape.end()) {
+  //     info.min.assign(iter_min->second.begin(), iter_min->second.end());
+  //     info.max.assign(iter_max->second.begin(), iter_max->second.end());
+  //     info.opt.assign(iter_opt->second.begin(), iter_opt->second.end());
+  //   }
+  //   shape_range_info_.insert(std::make_pair(name, info));
+  // }
 
-  for (int i = 0; i < onnx_reader.num_outputs; ++i) {
-    std::string name(onnx_reader.outputs[i].name);
-    std::vector<int64_t> shape(
-        onnx_reader.outputs[i].shape,
-        onnx_reader.outputs[i].shape + onnx_reader.outputs[i].rank);
-    outputs_desc_[i].name = name;
-    outputs_desc_[i].shape.assign(shape.begin(), shape.end());
-    outputs_desc_[i].dtype =
-        ReaderDtypeToTrtDtype(onnx_reader.outputs[i].dtype);
-    outputs_desc_[i].original_dtype =
-        ReaderDtypeToFDDtype(onnx_reader.outputs[i].dtype);
-  }
+  // for (int i = 0; i < onnx_reader.num_outputs; ++i) {
+  //   std::string name(onnx_reader.outputs[i].name);
+  //   std::vector<int64_t> shape(
+  //       onnx_reader.outputs[i].shape,
+  //       onnx_reader.outputs[i].shape + onnx_reader.outputs[i].rank);
+  //   outputs_desc_[i].name = name;
+  //   outputs_desc_[i].shape.assign(shape.begin(), shape.end());
+  //   outputs_desc_[i].dtype =
+  //       ReaderDtypeToTrtDtype(onnx_reader.outputs[i].dtype);
+  //   outputs_desc_[i].original_dtype =
+  //       ReaderDtypeToFDDtype(onnx_reader.outputs[i].dtype);
+  // }
 
   if (option_.external_stream_) {
     stream_ = reinterpret_cast<cudaStream_t>(option_.external_stream_);

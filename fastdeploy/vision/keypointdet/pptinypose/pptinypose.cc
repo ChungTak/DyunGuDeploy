@@ -2,9 +2,6 @@
 
 #include "fastdeploy/vision/utils/utils.h"
 #include "yaml-cpp/yaml.h"
-#ifdef ENABLE_PADDLE2ONNX
-#include "paddle2onnx/converter.h"
-#endif
 #include "fastdeploy/vision.h"
 
 namespace fastdeploy {

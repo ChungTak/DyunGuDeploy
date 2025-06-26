@@ -20,9 +20,7 @@
 #include "fastdeploy/runtime/backends/ort/ops/multiclass_nms.h"
 #include "fastdeploy/runtime/backends/ort/utils.h"
 #include "fastdeploy/utils/utils.h"
-#ifdef ENABLE_PADDLE2ONNX
-#include "paddle2onnx/converter.h"
-#endif
+
 
 #include <memory>
 
@@ -192,56 +190,7 @@ bool OrtBackend::InitFromPaddle(const std::string& model_buffer,
   char* model_content_ptr;
   int model_content_size = 0;
   bool save_external = false;
-#ifdef ENABLE_PADDLE2ONNX
-  std::vector<paddle2onnx::CustomOp> ops;
-  ops.resize(2);
-  strcpy(ops[0].op_name, "multiclass_nms3");
-  strcpy(ops[0].export_op_name, "MultiClassNMS");
-  strcpy(ops[1].op_name, "pool2d");
-  strcpy(ops[1].export_op_name, "AdaptivePool2d");
-  converted_to_fp16 = option.enable_fp16;
 
-  std::vector<char*> disable_fp16_ops;
-  for (auto i = 0; i < option.ort_disabled_ops_.size(); i++) {
-    auto one_type = option.ort_disabled_ops_[i];
-    char* charStr = new char[one_type.size() + 1];
-    std::strcpy(charStr, one_type.c_str());
-    disable_fp16_ops.push_back(charStr);
-  }
-  bool is_exported = paddle2onnx::Export(
-      model_buffer.c_str(), model_buffer.size(), params_buffer.c_str(),
-      params_buffer.size(), &model_content_ptr, &model_content_size, 11, true,
-      verbose, true, true, true, ops.data(), 2, "onnxruntime", nullptr, 0, "",
-      &save_external, option.enable_fp16, disable_fp16_ops.data(),
-      option.ort_disabled_ops_.size());
-  for (auto& disable_fp16_op : disable_fp16_ops) {
-    delete[] disable_fp16_op;
-  }
-  disable_fp16_ops.clear();
-  if (!is_exported) {
-    FDERROR << "Error occured while export PaddlePaddle to ONNX format."
-            << std::endl;
-    return false;
-  }
-
-  std::string onnx_model_proto(model_content_ptr,
-                               model_content_ptr + model_content_size);
-  delete[] model_content_ptr;
-  model_content_ptr = nullptr;
-  if (save_external) {
-    model_file_name = "model.onnx";
-    std::fstream f(model_file_name, std::ios::out);
-    FDASSERT(f.is_open(), "Can not open file: %s to save model.",
-             model_file_name.c_str());
-    f << onnx_model_proto;
-    f.close();
-  }
-  return InitFromOnnx(onnx_model_proto, option);
-#else
-  FDERROR << "Didn't compile with PaddlePaddle Frontend, you can try to "
-             "call `InitFromOnnx` instead."
-          << std::endl;
-#endif
   return false;
 }
 
@@ -260,13 +209,6 @@ bool OrtBackend::InitFromOnnx(const std::string& model_file,
     }
     char* model_content_ptr;
     int model_content_size = 0;
-#ifdef ENABLE_PADDLE2ONNX
-    paddle2onnx::ConvertFP32ToFP16(model_file.c_str(), model_file.size(),
-                                   &model_content_ptr, &model_content_size);
-#else
-    FDERROR << "Didn't compile with ENABLE_PADDLE2ONNX, FP16 is not supported" << std::endl;
-    return false;
-#endif
     std::string onnx_model_proto(model_content_ptr,
                                  model_content_ptr + model_content_size);
     delete[] model_content_ptr;

@@ -55,7 +55,7 @@ __build_fastdeploy_osx_arm64_shared() {
 
   cmake -DCMAKE_BUILD_TYPE=MinSizeRel \
         -DENABLE_ORT_BACKEND=ON \
-        -DENABLE_PADDLE2ONNX=ON \
+        
         -DENABLE_VISION=ON \
         -DENABLE_BENCHMARK=ON \
         -DBUILD_EXAMPLES=ON \
@@ -74,7 +74,7 @@ __build_fastdeploy_osx_x86_64_shared() {
         -DENABLE_ORT_BACKEND=ON \
         -DENABLE_PADDLE_BACKEND=ON \
         -DENABLE_OPENVINO_BACKEND=ON \
-        -DENABLE_PADDLE2ONNX=ON \
+        
         -DENABLE_VISION=ON \
         -DENABLE_BENCHMARK=ON \
         -DBUILD_EXAMPLES=ON \
