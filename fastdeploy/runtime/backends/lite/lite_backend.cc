@@ -65,7 +65,7 @@ bool LiteBackend::Init(const RuntimeOption& runtime_option) {
     return false;
   }
 
-  if (runtime_option.model_format != ModelFormat::PADDLE) {
+  if (runtime_option.model_format != ModelFormat::ONNX) {
     FDERROR
         << "PaddleLiteBackend only supports model format PADDLE, but now it's "
         << runtime_option.model_format << "." << std::endl;

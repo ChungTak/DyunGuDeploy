@@ -46,7 +46,7 @@ fastdeploy::vision::tracking::PPTracking(
         const string& params_file = "",
         const string& config_file,
         const RuntimeOption& runtime_option = RuntimeOption(),
-        const ModelFormat& model_format = ModelFormat::PADDLE)
+        const ModelFormat& model_format = ModelFormat::ONNX)
 ```
 
 PP-Tracking模型加载和初始化，其中model_file为导出的Paddle模型格式。

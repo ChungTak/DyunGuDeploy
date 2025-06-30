@@ -395,9 +395,8 @@ class RuntimeOption:
         """Enable/Disable MKLDNN while using Paddle Inference backend, mkldnn is enabled by default.
         """
         logging.warning(
-            "`RuntimeOption.set_paddle_mkldnn` will be derepcated in v1.2.0, please use `RuntimeOption.paddle_infer_option.enable_mkldnn = True` instead."
+            "Paddle backend has been removed. This function is no longer supported and will be ignored."
         )
-        self._option.paddle_infer_option.enable_mkldnn = True
 
     def set_openvino_device(self, name="CPU"):
         """Set device name for OpenVINO, default 'CPU', can also be 'AUTO', 'GPU', 'GPU.1'....
@@ -434,25 +433,22 @@ class RuntimeOption:
         """Enable print out the debug log information while using Paddle Inference backend, the log information is disabled by default.
         """
         logging.warning(
-            "RuntimeOption.enable_paddle_log_info` will be deprecated in v1.2.0, please use `RuntimeOption.paddle_infer_option.enable_log_info = True` instead."
+            "Paddle backend has been removed. This function is no longer supported and will be ignored."
         )
-        self._option.paddle_infer_option.enable_log_info = True
 
     def disable_paddle_log_info(self):
         """Disable print out the debug log information while using Paddle Inference backend, the log information is disabled by default.
         """
         logging.warning(
-            "RuntimeOption.disable_paddle_log_info` will be deprecated in v1.2.0, please use `RuntimeOption.paddle_infer_option.enable_log_info = False` instead."
+            "Paddle backend has been removed. This function is no longer supported and will be ignored."
         )
-        self._option.paddle_infer_option.enable_log_info = False
 
     def set_paddle_mkldnn_cache_size(self, cache_size):
         """Set size of shape cache while using Paddle Inference backend with MKLDNN enabled, default will cache all the dynamic shape.
         """
         logging.warning(
-            "RuntimeOption.set_paddle_mkldnn_cache_size` will be deprecated in v1.2.0, please use `RuntimeOption.paddle_infer_option.mkldnn_cache_size = {}` instead.".
-            format(cache_size))
-        self._option.paddle_infer_option.mkldnn_cache_size = cache_size
+            "Paddle backend has been removed. This function is no longer supported and will be ignored."
+        )
 
     def enable_lite_fp16(self):
         """Enable half precision inference while using Paddle Lite backend on ARM CPU, fp16 is disabled by default.
@@ -564,17 +560,8 @@ class RuntimeOption:
         """While using TensorRT backend, enable_paddle_to_trt() will change to use Paddle Inference backend, and use its integrated TensorRT instead.
         """
         logging.warning(
-            "`RuntimeOption.enable_paddle_to_trt` will be deprecated in v1.2.l0, if you want to run tensorrt with Paddle Inference backend, please use the following method, "
+            "Paddle backend has been removed. This function is no longer supported and will be ignored."
         )
-        logging.warning("    ==============================================")
-        logging.warning("    import fastdeploy as fd")
-        logging.warning("    option = fd.RuntimeOption()")
-        logging.warning("    option.use_gpu(0)")
-        logging.warning("    option.use_paddle_infer_backend()")
-        logging.warning("    option.paddle_infer_option.enable_trt = True")
-        logging.warning("    ==============================================")
-        self._option.use_paddle_backend()
-        self._option.paddle_infer_option.enable_trt = True
 
     def set_trt_max_workspace_size(self, trt_max_workspace_size):
         """Set max workspace size while using TensorRT backend.
@@ -596,33 +583,29 @@ class RuntimeOption:
         """Enable collect subgraph shape information while using Paddle Inference with TensorRT
         """
         logging.warning(
-            "`RuntimeOption.enable_paddle_trt_collect_shape` will be deprecated in v1.2.0, please use `RuntimeOption.paddle_infer_option.collect_trt_shape = True` instead."
+            "Paddle backend has been removed. This function is no longer supported and will be ignored."
         )
-        self._option.paddle_infer_option.collect_trt_shape = True
 
     def disable_paddle_trt_collect_shape(self):
         """Disable collect subgraph shape information while using Paddle Inference with TensorRT
         """
         logging.warning(
-            "`RuntimeOption.disable_paddle_trt_collect_shape` will be deprecated in v1.2.0, please use `RuntimeOption.paddle_infer_option.collect_trt_shape = False` instead."
+            "Paddle backend has been removed. This function is no longer supported and will be ignored."
         )
-        self._option.paddle_infer_option.collect_trt_shape = False
 
     def delete_paddle_backend_pass(self, pass_name):
         """Delete pass by name in paddle backend
         """
         logging.warning(
-            "`RuntimeOption.delete_paddle_backend_pass` will be deprecated in v1.2.0, please use `RuntimeOption.paddle_infer_option.delete_pass` instead."
+            "Paddle backend has been removed. This function is no longer supported and will be ignored."
         )
-        self._option.paddle_infer_option.delete_pass(pass_name)
 
     def disable_paddle_trt_ops(self, ops):
         """Disable some ops in paddle trt backend
         """
         logging.warning(
-            "`RuntimeOption.disable_paddle_trt_ops` will be deprecated in v1.2.0, please use `RuntimeOption.paddle_infer_option.disable_trt_ops()` instead."
+            "Paddle backend has been removed. This function is no longer supported and will be ignored."
         )
-        self._option.disable_trt_ops(ops)
 
     def use_ipu(self,
                 device_num=1,
@@ -638,11 +621,8 @@ class RuntimeOption:
                        available_memory_proportion=1.0,
                        enable_half_partial=False):
         logging.warning(
-            "`RuntimeOption.set_ipu_config` will be deprecated in v1.2.0, please use `RuntimeOption.paddle_infer_option.set_ipu_config()` instead."
+            "Paddle backend has been removed. This function is no longer supported and will be ignored."
         )
-        self._option.paddle_infer_option.set_ipu_config(
-            enable_fp16, replica_num, available_memory_proportion,
-            enable_half_partial)
 
     @property
     def poros_option(self):
@@ -683,14 +663,6 @@ class RuntimeOption:
         :return TrtBackendOption
         """
         return self._option.trt_option
-
-    @property
-    def paddle_infer_option(self):
-        """Get PaddleBackendOption object to configure Paddle Inference backend
-
-        :return PaddleBackendOption
-        """
-        return self._option.paddle_infer_option
 
     def enable_profiling(self, inclue_h2d_d2h=False, repeat=100, warmup=50):
         """Set the profile mode as 'true'.

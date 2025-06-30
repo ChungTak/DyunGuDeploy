@@ -38,7 +38,7 @@ def build_option(args):
         if backend == "ort":
             option.use_ort_backend()
         elif backend == "paddle":
-            option.use_paddle_infer_backend()
+            option.use_ort_backend()  # Note: paddle backend removed
         elif backend in ["trt", "paddle_trt"]:
             option.use_trt_backend()
             option.set_trt_input_shape("input", [1, 3, 112, 112])
@@ -58,7 +58,7 @@ def build_option(args):
         elif backend == "ov":
             option.use_openvino_backend()
         elif backend == "paddle":
-            option.use_paddle_infer_backend()
+            option.use_ort_backend()  # Note: paddle backend removed
         elif backend == "default":
             return option
         else:

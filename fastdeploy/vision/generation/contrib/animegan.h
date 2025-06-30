@@ -36,7 +36,7 @@ class FASTDEPLOY_DECL AnimeGAN : public FastDeployModel {
    */
   AnimeGAN(const std::string& model_file, const std::string& params_file = "",
          const RuntimeOption& custom_option = RuntimeOption(),
-         const ModelFormat& model_format = ModelFormat::PADDLE);
+         const ModelFormat& model_format = ModelFormat::ONNX);
 
   std::string ModelName() const { return "styletransfer/animegan"; }
 

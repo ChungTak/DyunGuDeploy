@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
   } else if (flag == 5) {
     option.UseGpu();
     option.UsePaddleInferBackend();
-    option.paddle_infer_option.enable_trt = true;
+    option.trt_option.enable_fp16 = true;  // Note: paddle_infer_option removed
     option.trt_option.SetShape("image", {1, 3, 640, 640}, {1, 3, 640, 640},
                                {1, 3, 640, 640});
     option.trt_option.SetShape("scale_factor", {1, 2}, {1, 2}, {1, 2});

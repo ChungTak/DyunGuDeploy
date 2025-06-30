@@ -25,7 +25,7 @@ void CpuInfer(const std::string& model_dir, const std::string& image_file) {
   fastdeploy::RuntimeOption option;
   option.UseCpu();
   auto model = fastdeploy::vision::detection::YOLOv5(
-      model_file, params_file, option, fastdeploy::ModelFormat::PADDLE);
+      model_file, params_file, option, fastdeploy::ModelFormat::ONNX);
   if (!model.Initialized()) {
     std::cerr << "Failed to initialize." << std::endl;
     return;
@@ -52,7 +52,7 @@ void GpuInfer(const std::string& model_dir, const std::string& image_file) {
   auto option = fastdeploy::RuntimeOption();
   option.UseGpu();
   auto model = fastdeploy::vision::detection::YOLOv5(
-      model_file, params_file, option, fastdeploy::ModelFormat::PADDLE);
+      model_file, params_file, option, fastdeploy::ModelFormat::ONNX);
   if (!model.Initialized()) {
     std::cerr << "Failed to initialize." << std::endl;
     return;
@@ -81,7 +81,7 @@ void TrtInfer(const std::string& model_dir, const std::string& image_file) {
   option.UseTrtBackend();
   option.SetTrtInputShape("images", {1, 3, 640, 640});
   auto model = fastdeploy::vision::detection::YOLOv5(
-      model_file, params_file, option, fastdeploy::ModelFormat::PADDLE);
+      model_file, params_file, option, fastdeploy::ModelFormat::ONNX);
 
   if (!model.Initialized()) {
     std::cerr << "Failed to initialize." << std::endl;
@@ -108,7 +108,7 @@ void KunlunXinInfer(const std::string& model_dir, const std::string& image_file)
   fastdeploy::RuntimeOption option;
   option.UseKunlunXin();
   auto model = fastdeploy::vision::detection::YOLOv5(
-      model_file, params_file, option, fastdeploy::ModelFormat::PADDLE);
+      model_file, params_file, option, fastdeploy::ModelFormat::ONNX);
 
   if (!model.Initialized()) {
     std::cerr << "Failed to initialize." << std::endl;
@@ -136,7 +136,7 @@ void AscendInfer(const std::string& model_dir, const std::string& image_file) {
   fastdeploy::RuntimeOption option;
   option.UseAscend();
   auto model = fastdeploy::vision::detection::YOLOv5(
-      model_file, params_file, option, fastdeploy::ModelFormat::PADDLE);
+      model_file, params_file, option, fastdeploy::ModelFormat::ONNX);
 
   if (!model.Initialized()) {
     std::cerr << "Failed to initialize." << std::endl;

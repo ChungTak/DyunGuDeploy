@@ -70,8 +70,8 @@ YOLOv6::YOLOv6(const std::string& model_file, const std::string& params_file,
     valid_cpu_backends = {Backend::OPENVINO, Backend::ORT};
     valid_gpu_backends = {Backend::ORT, Backend::TRT};
   } else {
-    valid_cpu_backends = {Backend::PDINFER, Backend::ORT, Backend::LITE};
-    valid_gpu_backends = {Backend::PDINFER, Backend::ORT, Backend::TRT};
+    valid_cpu_backends = {Backend::ORT, Backend::LITE};
+    valid_gpu_backends = {Backend::ORT, Backend::TRT};
     valid_kunlunxin_backends = {Backend::LITE};
     valid_ascend_backends = {Backend::LITE};
   }

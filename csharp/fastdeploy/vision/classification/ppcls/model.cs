@@ -37,7 +37,7 @@ public class PaddleClasModel {
    */
   public PaddleClasModel(string model_file, string params_file,
                          string config_file, RuntimeOption custom_option = null,
-                         ModelFormat model_format = ModelFormat.PADDLE) {
+                         ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }

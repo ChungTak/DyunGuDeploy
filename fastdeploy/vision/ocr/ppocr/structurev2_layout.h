@@ -39,7 +39,7 @@ class FASTDEPLOY_DECL StructureV2Layout : public FastDeployModel {
   StructureV2Layout(const std::string& model_file,
                     const std::string& params_file = "",
                     const RuntimeOption& custom_option = RuntimeOption(),
-                    const ModelFormat& model_format = ModelFormat::PADDLE);
+                    const ModelFormat& model_format = ModelFormat::ONNX);
 
   /** \brief Clone a new StructureV2Layout with less memory usage when multiple instances of the same model are created
    *

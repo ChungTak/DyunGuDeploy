@@ -38,8 +38,8 @@ class FASTDEPLOY_DECL ArcFace : public InsightFaceRecognitionBase {
     } else if (model_format == ModelFormat::RKNN) {
       valid_rknpu_backends = {Backend::RKNPU2};
     } else {
-      valid_cpu_backends = {Backend::PDINFER, Backend::ORT, Backend::LITE};
-      valid_gpu_backends = {Backend::PDINFER, Backend::ORT, Backend::TRT};
+      valid_cpu_backends = {Backend::ORT, Backend::LITE};
+      valid_gpu_backends = {Backend::ORT, Backend::TRT};
       valid_kunlunxin_backends = {Backend::LITE};
     }
     initialized = Initialize();
@@ -68,8 +68,8 @@ class FASTDEPLOY_DECL CosFace : public InsightFaceRecognitionBase {
     } else if (model_format == ModelFormat::RKNN) {
       valid_rknpu_backends = {Backend::RKNPU2};
     } else {
-      valid_cpu_backends = {Backend::PDINFER, Backend::ORT, Backend::LITE};
-      valid_gpu_backends = {Backend::PDINFER, Backend::ORT, Backend::TRT};
+      valid_cpu_backends = {Backend::ORT, Backend::LITE};
+      valid_gpu_backends = {Backend::ORT, Backend::TRT};
       valid_kunlunxin_backends = {Backend::LITE};
     }
     initialized = Initialize();
@@ -97,8 +97,8 @@ class FASTDEPLOY_DECL PartialFC : public InsightFaceRecognitionBase {
     } else if (model_format == ModelFormat::RKNN) {
       valid_rknpu_backends = {Backend::RKNPU2};
     } else {
-      valid_cpu_backends = {Backend::PDINFER, Backend::ORT, Backend::LITE};
-      valid_gpu_backends = {Backend::PDINFER, Backend::ORT, Backend::TRT};
+      valid_cpu_backends = {Backend::ORT, Backend::LITE};
+      valid_gpu_backends = {Backend::ORT, Backend::TRT};
       valid_kunlunxin_backends = {Backend::LITE};
     }
     initialized = Initialize();
@@ -126,8 +126,8 @@ class FASTDEPLOY_DECL VPL : public InsightFaceRecognitionBase {
     } else if (model_format == ModelFormat::RKNN) {
       valid_rknpu_backends = {Backend::RKNPU2};
     } else {
-      valid_cpu_backends = {Backend::PDINFER, Backend::ORT, Backend::LITE};
-      valid_gpu_backends = {Backend::PDINFER, Backend::ORT, Backend::TRT};
+      valid_cpu_backends = {Backend::ORT, Backend::LITE};
+      valid_gpu_backends = {Backend::ORT, Backend::TRT};
       valid_kunlunxin_backends = {Backend::LITE};
     }
     initialized = Initialize();

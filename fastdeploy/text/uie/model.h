@@ -103,7 +103,7 @@ struct FASTDEPLOY_DECL UIEModel : public FastDeployModel {
            const fastdeploy::RuntimeOption& custom_option =
                fastdeploy::RuntimeOption(),
            const fastdeploy::ModelFormat& model_format =
-               fastdeploy::ModelFormat::PADDLE,
+               fastdeploy::ModelFormat::ONNX,
            SchemaLanguage schema_language = SchemaLanguage::ZH);
   UIEModel(const std::string& model_file, const std::string& params_file,
            const std::string& vocab_file, float position_prob,
@@ -111,7 +111,7 @@ struct FASTDEPLOY_DECL UIEModel : public FastDeployModel {
            const fastdeploy::RuntimeOption& custom_option =
                fastdeploy::RuntimeOption(),
            const fastdeploy::ModelFormat& model_format =
-               fastdeploy::ModelFormat::PADDLE,
+               fastdeploy::ModelFormat::ONNX,
            SchemaLanguage schema_language = SchemaLanguage::ZH);
   UIEModel(const std::string& model_file, const std::string& params_file,
            const std::string& vocab_file, float position_prob,
@@ -120,7 +120,7 @@ struct FASTDEPLOY_DECL UIEModel : public FastDeployModel {
            const fastdeploy::RuntimeOption& custom_option =
                fastdeploy::RuntimeOption(),
            const fastdeploy::ModelFormat& model_format =
-               fastdeploy::ModelFormat::PADDLE,
+               fastdeploy::ModelFormat::ONNX,
            SchemaLanguage schema_language = SchemaLanguage::ZH);
   virtual std::string ModelName() const { return "UIEModel"; }
   void SetSchema(const std::vector<std::string>& schema);

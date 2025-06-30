@@ -153,7 +153,7 @@ bool OrtBackend::Init(const RuntimeOption& option) {
   ort_option.device_id = option.device_id;
   ort_option.external_stream_ = option.external_stream_;
 
-  if (option.model_format == ModelFormat::PADDLE) {
+  if (option.model_format == ModelFormat::ONNX) {
     if (option.model_from_memory_) {
       return InitFromPaddle(option.model_file, option.params_file, ort_option);
     }

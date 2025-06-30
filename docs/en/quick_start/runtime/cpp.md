@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
   // setup option
   fd::RuntimeOption runtime_option;
-  runtime_option.SetModelPath(model_file, params_file, fd::ModelFormat::PADDLE);
+  runtime_option.SetModelPath(model_file, params_file, fd::ModelFormat::ONNX);
   runtime_option.UseOrtBackend();
   runtime_option.SetCpuThreadNum(12);
   // init runtime

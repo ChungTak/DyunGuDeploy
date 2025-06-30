@@ -48,7 +48,7 @@ std::unique_ptr<fastdeploy::Runtime> CreateRuntime(
     const std::vector<std::string>& disable_paddle_trt_ops = {}) {
   fastdeploy::RuntimeOption runtime_option;
   runtime_option.SetModelPath(model_file, params_file,
-                              fastdeploy::ModelFormat::PADDLE);
+                              fastdeploy::ModelFormat::ONNX);
   runtime_option.UseGpu();
   if (!use_trt_backend) {
     runtime_option.UsePaddleBackend();

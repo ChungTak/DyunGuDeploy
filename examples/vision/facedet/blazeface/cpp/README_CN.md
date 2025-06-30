@@ -46,7 +46,7 @@ fastdeploy::vision::facedet::BlazeFace(
         const string& params_file = "",
         const string& config_file = "",
         const RuntimeOption& runtime_option = RuntimeOption(),
-        const ModelFormat& model_format = ModelFormat::PADDLE)
+        const ModelFormat& model_format = ModelFormat::ONNX)
 ```
 
 BlazeFace模型加载和初始化，其中model_file为导出的PADDLE模型格式。

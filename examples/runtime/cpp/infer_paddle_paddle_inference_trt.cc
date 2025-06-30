@@ -30,10 +30,10 @@ int main(int argc, char* argv[]) {
   runtime_option.UsePaddleInferBackend();
    runtime_option.UseGpu(0);
  
-  // Enable Paddle Inference + TensorRT
-  // If need to configure Paddle Inference backend for more option, we can configure runtime_option.paddle_infer_option
-  // refer https://baidu-paddle.github.io/fastdeploy-api/cpp/html/structfastdeploy_1_1PaddleBackendOption.html
-  runtime_option.paddle_infer_option.enable_trt = true;
+  // Enable TensorRT backend instead of Paddle
+  // Note: paddle_infer_option has been removed, using TRT backend
+  runtime_option.UseTrtBackend();
+  runtime_option.trt_option.enable_fp16 = true;
 
   // If need to configure TensorRT backend for more option, we can configure runtime_option.trt_option
   // refer https://baidu-paddle.github.io/fastdeploy-api/cpp/html/structfastdeploy_1_1TrtBackendOption.html

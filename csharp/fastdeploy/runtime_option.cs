@@ -37,7 +37,7 @@ public class RuntimeOption {
    * \param[in] format Format of the loaded model
    */
   public void SetModelPath(string model_path, string params_path = "",
-                           ModelFormat format = ModelFormat.PADDLE) {
+                           ModelFormat format = ModelFormat.ONNX) {
     FD_C_RuntimeOptionWrapperSetModelPath(fd_runtime_option_wrapper, model_path,
                                           params_path, format);
   }
@@ -49,7 +49,7 @@ public class RuntimeOption {
    * \param[in] format Format of the loaded model
    */
   public void SetModelBuffer(string model_buffer, string params_buffer = "",
-                             ModelFormat format = ModelFormat.PADDLE) {
+                             ModelFormat format = ModelFormat.ONNX) {
     FD_C_RuntimeOptionWrapperSetModelBuffer(
         fd_runtime_option_wrapper, model_buffer, params_buffer, format);
   }

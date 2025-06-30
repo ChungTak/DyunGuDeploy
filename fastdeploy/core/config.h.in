@@ -23,10 +23,6 @@
 #cmakedefine ENABLE_ORT_BACKEND
 #endif
 
-#ifndef ENABLE_PADDLE_BACKEND
-#cmakedefine ENABLE_PADDLE_BACKEND
-#endif
-
 #ifndef ENABLE_POROS_BACKEND
 #cmakedefine ENABLE_POROS_BACKEND
 #endif

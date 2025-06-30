@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
   benchmark::ResultManager::LoadBenchmarkConfig(FLAGS_config_path,
                                                 &config_info);
   std::string model_name, params_name, config_name;
-  auto model_format = fastdeploy::ModelFormat::PADDLE;
+  auto model_format = fastdeploy::ModelFormat::ONNX;
   if (!UpdateModelResourceName(&model_name, &params_name, &config_name,
                                &model_format, config_info)) {
     return -1;

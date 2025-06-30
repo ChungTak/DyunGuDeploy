@@ -76,7 +76,7 @@ def build_option(args):
     if args.backend == 'onnx_runtime':
         runtime_option.use_ort_backend()
     elif args.backend == 'paddle_inference':
-        runtime_option.use_paddle_infer_backend()
+        runtime_option.use_ort_backend()  # Note: paddle backend removed
     elif args.backend == 'openvino':
         runtime_option.use_openvino_backend()
     else:

@@ -108,7 +108,7 @@ bool OpenVINOBackend::Init(const RuntimeOption& option) {
     return false;
   }
 
-  if (option.model_format == ModelFormat::PADDLE) {
+  if (option.model_format == ModelFormat::ONNX) {
     return InitFromPaddle(option.model_file, option.params_file,
                           option.openvino_option);
   } else if (option.model_format == ModelFormat::ONNX) {

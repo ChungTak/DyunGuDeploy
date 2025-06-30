@@ -410,14 +410,14 @@ UIEModel(
     const std::vector<std::string>& schema,
     const fastdeploy::RuntimeOption& custom_option =
         fastdeploy::RuntimeOption(),
-    const fastdeploy::ModelFormat& model_format = fastdeploy::ModelFormat::PADDLE,
+    const fastdeploy::ModelFormat& model_format = fastdeploy::ModelFormat::ONNX,
     SchemaLanguage schema_language = SchemaLanguage::ZH);
 UIEModel(
     const std::string& model_file, const std::string& params_file,
     const std::string& vocab_file, float position_prob, size_t max_length,
     const SchemaNode& schema, const fastdeploy::RuntimeOption& custom_option =
                                   fastdeploy::RuntimeOption(),
-    const fastdeploy::ModelFormat& model_format = fastdeploy::ModelFormat::PADDLE,
+    const fastdeploy::ModelFormat& model_format = fastdeploy::ModelFormat::ONNX,
     SchemaLanguage schema_language = SchemaLanguage::ZH);
 UIEModel(
     const std::string& model_file, const std::string& params_file,
@@ -426,7 +426,7 @@ UIEModel(
     const fastdeploy::RuntimeOption& custom_option =
         fastdeploy::RuntimeOption(),
     const fastdeploy::ModelFormat& model_format =
-        fastdeploy::ModelFormat::PADDLE,
+        fastdeploy::ModelFormat::ONNX,
     SchemaLanguage schema_language = SchemaLanguage::ZH);
 ```
 

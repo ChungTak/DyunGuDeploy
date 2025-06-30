@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
   benchmark::ResultManager::LoadBenchmarkConfig(FLAGS_config_path,
                                                 &config_info);
   std::string model_name, params_name, config_name;
-  auto model_format = fastdeploy::ModelFormat::PADDLE;
+  auto model_format = fastdeploy::ModelFormat::ONNX;
   if (!UpdateModelResourceName(&model_name, &params_name, &config_name,
                                &model_format, config_info)) {
     return -1;
@@ -42,7 +42,8 @@ int main(int argc, char* argv[]) {
   auto params_file = FLAGS_model + sep + "model.pdiparams";
   auto config_file = FLAGS_model + sep + "infer_cfg.yml";
   if (config_info["backend"] == "paddle_trt") {
-    option.paddle_infer_option.collect_trt_shape = true;
+    // Note: paddle_infer_option has been removed, using TRT option instead
+    option.trt_option.enable_fp16 = true;
   }
   if (config_info["backend"] == "paddle_trt" ||
       config_info["backend"] == "trt") {

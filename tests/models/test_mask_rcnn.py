@@ -78,7 +78,7 @@ def test_detection_mask_rcnn1():
 
     option = rc.test_option
     option.set_model_path(model_file, params_file)
-    option.use_paddle_infer_backend()
+    option.use_ort_backend()  # Note: paddle backend removed
     runtime = fd.Runtime(option)
 
     # compare diff

@@ -1,6 +1,5 @@
 export ENABLE_ORT_BACKEND=ON
 export ENABLE_OPENVINO_BACKEND=ON
-export ENABLE_PADDLE_BACKEND=ON
 export ENABLE_TRT_BACKEND=ON
 export TRT_DIRECTORY=/fastdeploy/libs/TensorRT-8.4.1.5
 export CUDA_DIRECTORY=/usr/local/cuda

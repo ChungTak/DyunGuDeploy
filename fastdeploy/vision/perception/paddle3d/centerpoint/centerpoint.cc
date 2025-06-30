@@ -24,7 +24,7 @@ Centerpoint::Centerpoint(const std::string& model_file,
                          const RuntimeOption& custom_option,
                          const ModelFormat& model_format)
     : preprocessor_(config_file) {
-  valid_gpu_backends = {Backend::PDINFER};
+  valid_gpu_backends = {Backend::ORT, Backend::TRT};
 
   runtime_option = custom_option;
   runtime_option.model_format = model_format;

@@ -32,7 +32,6 @@ enum Backend {
   ORT,  //< ONNX Runtime, support Paddle/ONNX format model,
   //< CPU/ Nvidia GPU DirectML
   TRT,  ///< TensorRT, support Paddle/ONNX format model, Nvidia GPU only
-  PDINFER,  ///< Paddle Inference, support Paddle format model, CPU / Nvidia GPU
   POROS,    ///< Poros, support TorchScript format model, CPU / Nvidia GPU
   OPENVINO,   ///< Intel OpenVINO, support Paddle/ONNX format, CPU only
   LITE,       ///< Paddle Lite, support Paddle format model, ARM CPU / ARM GPU
@@ -69,7 +68,6 @@ enum FASTDEPLOY_DECL Device {
 /*! Deep learning model format */
 enum ModelFormat {
   AUTOREC,      ///< Auto recognize the model format by model file name
-  PADDLE,       ///< Model with paddlepaddle format
   ONNX,         ///< Model with ONNX format
   RKNN,         ///< Model with RKNN format
   TORCHSCRIPT,  ///< Model with TorchScript format
@@ -81,8 +79,6 @@ enum ModelFormat {
 /// Describle all the supported backends for specified model format
 static std::map<ModelFormat, std::vector<Backend>>
     s_default_backends_by_format = {
-  {ModelFormat::PADDLE, {Backend::PDINFER, Backend::LITE,
-                      Backend::ORT, Backend::OPENVINO, Backend::TRT}},
   {ModelFormat::ONNX, {Backend::ORT, Backend::OPENVINO, Backend::TRT}},
   {ModelFormat::RKNN, {Backend::RKNPU2}},
   {ModelFormat::HORIZON, {Backend::HORIZONNPU}},
@@ -94,15 +90,15 @@ static std::map<ModelFormat, std::vector<Backend>>
 /// Describle all the supported backends for specified device
 static std::map<Device, std::vector<Backend>>
     s_default_backends_by_device = {
-  {Device::CPU, {Backend::LITE, Backend::PDINFER, Backend::ORT,
+  {Device::CPU, {Backend::LITE, Backend::ORT,
                 Backend::OPENVINO, Backend::POROS, Backend::TVM}},
-  {Device::GPU, {Backend::LITE, Backend::PDINFER, Backend::ORT,
+  {Device::GPU, {Backend::LITE, Backend::ORT,
                 Backend::TRT, Backend::POROS, Backend::TVM}},
   {Device::RKNPU, {Backend::RKNPU2}},
   {Device::SUNRISENPU, {Backend::HORIZONNPU}},
-  {Device::IPU, {Backend::PDINFER}},
+  {Device::IPU, {}},
   {Device::TIMVX, {Backend::LITE}},
-  {Device::KUNLUNXIN, {Backend::LITE, Backend::PDINFER}},
+  {Device::KUNLUNXIN, {Backend::LITE}},
   {Device::ASCEND, {Backend::LITE}},
   {Device::SOPHGOTPUD, {Backend::SOPHGOTPU}},
   {Device::DIRECTML, {Backend::ORT}}

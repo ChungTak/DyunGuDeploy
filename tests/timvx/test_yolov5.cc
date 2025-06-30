@@ -34,7 +34,7 @@ void InferAndCompare(const std::string& model_dir,
   option.SetLiteSubgraphPartitionPath(subgraph_file);
 
   auto model = fastdeploy::vision::detection::YOLOv5(
-      model_file, params_file, option, fastdeploy::ModelFormat::PADDLE);
+      model_file, params_file, option, fastdeploy::ModelFormat::ONNX);
   assert(model.Initialized());
 
   auto im = cv::imread(image_file);

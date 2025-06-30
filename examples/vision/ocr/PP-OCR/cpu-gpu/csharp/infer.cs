@@ -58,9 +58,9 @@ namespace Test
             string rec_model_file = rec_model_dir + sep + "inference.pdmodel";
             string rec_params_file = rec_model_dir + sep + "inference.pdiparams";
 
-            fastdeploy.vision.ocr.DBDetector dbdetector = new fastdeploy.vision.ocr.DBDetector(det_model_file, det_params_file, runtimeoption, ModelFormat.PADDLE);
-            fastdeploy.vision.ocr.Classifier classifier = new fastdeploy.vision.ocr.Classifier(cls_model_file, cls_params_file, runtimeoption, ModelFormat.PADDLE);
-            fastdeploy.vision.ocr.Recognizer recognizer = new fastdeploy.vision.ocr.Recognizer(rec_model_file, rec_params_file, rec_label_file, runtimeoption, ModelFormat.PADDLE);
+            fastdeploy.vision.ocr.DBDetector dbdetector = new fastdeploy.vision.ocr.DBDetector(det_model_file, det_params_file, runtimeoption, ModelFormat.ONNX);
+            fastdeploy.vision.ocr.Classifier classifier = new fastdeploy.vision.ocr.Classifier(cls_model_file, cls_params_file, runtimeoption, ModelFormat.ONNX);
+            fastdeploy.vision.ocr.Recognizer recognizer = new fastdeploy.vision.ocr.Recognizer(rec_model_file, rec_params_file, rec_label_file, runtimeoption, ModelFormat.ONNX);
             fastdeploy.pipeline.PPOCRv3 model = new fastdeploy.pipeline.PPOCRv3(dbdetector, classifier, recognizer);
             if(!model.Initialized()){
                 Console.WriteLine("Failed to initialize.\n");

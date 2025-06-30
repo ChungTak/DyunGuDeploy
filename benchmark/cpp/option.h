@@ -63,11 +63,12 @@ static bool CreateRuntimeOption(fastdeploy::RuntimeOption* option,
                             repeat, warmup);
   }
   if (config_info["enable_log_info"] == "true") {
-    option->paddle_infer_option.enable_log_info = true;
+    // Note: paddle_infer_option.enable_log_info has been removed
+    // Log info is now controlled globally
   }
   if (config_info["max_workspace_size"] != "-1") {
     int max_workspace_size = std::stoi(config_info["max_workspace_size"]);
-    option->paddle_infer_option.trt_option.max_workspace_size = max_workspace_size;
+    // Note: paddle_infer_option.trt_option has been removed
     option->trt_option.max_workspace_size = max_workspace_size;
   }
   if (config_info["device"] == "gpu") {
@@ -82,8 +83,8 @@ static bool CreateRuntimeOption(fastdeploy::RuntimeOption* option,
                                           sep + "trt_serialized.trt";
       option->UseTrtBackend();
       if (config_info["backend"] == "paddle_trt") {
-        option->UsePaddleInferBackend();
-        option->paddle_infer_option.enable_trt = true;
+        // Note: paddle_infer_option has been removed, using TRT backend
+        option->UseTrtBackend();
       }
       if (config_info["use_fp16"] == "true") {
         option->trt_option.enable_fp16 = true;

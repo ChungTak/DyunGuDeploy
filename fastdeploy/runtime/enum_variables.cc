@@ -21,8 +21,6 @@ std::ostream& operator<<(std::ostream& out, const Backend& backend) {
     out << "Backend::ORT";
   } else if (backend == Backend::TRT) {
     out << "Backend::TRT";
-  } else if (backend == Backend::PDINFER) {
-    out << "Backend::PDINFER";
   } else if (backend == Backend::OPENVINO) {
     out << "Backend::OPENVINO";
   } else if (backend == Backend::RKNPU2) {
@@ -79,9 +77,7 @@ std::ostream& operator<<(std::ostream& out, const Device& d) {
 }
 
 std::ostream& operator<<(std::ostream& out, const ModelFormat& format) {
-  if (format == ModelFormat::PADDLE) {
-    out << "ModelFormat::PADDLE";
-  } else if (format == ModelFormat::ONNX) {
+  if (format == ModelFormat::ONNX) {
     out << "ModelFormat::ONNX";
   } else if (format == ModelFormat::RKNN) {
     out << "ModelFormat::RKNN";
@@ -106,9 +102,6 @@ std::vector<Backend> GetAvailableBackends() {
 #endif
 #ifdef ENABLE_TRT_BACKEND
   backends.push_back(Backend::TRT);
-#endif
-#ifdef ENABLE_PADDLE_BACKEND
-  backends.push_back(Backend::PDINFER);
 #endif
 #ifdef ENABLE_POROS_BACKEND
   backends.push_back(Backend::POROS);

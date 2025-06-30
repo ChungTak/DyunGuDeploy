@@ -31,7 +31,7 @@ public class YOLOv5 {
 
   public YOLOv5( string model_file, string params_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -147,7 +147,7 @@ public class YOLOv7 {
 
   public YOLOv7( string model_file, string params_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -262,7 +262,7 @@ public class YOLOv8 {
 
   public YOLOv8( string model_file, string params_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -379,7 +379,7 @@ public class YOLOv6 {
 
   public YOLOv6( string model_file, string params_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -453,7 +453,7 @@ public class YOLOR {
 
   public YOLOR( string model_file, string params_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -528,7 +528,7 @@ public class YOLOX {
 
   public YOLOX( string model_file, string params_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }

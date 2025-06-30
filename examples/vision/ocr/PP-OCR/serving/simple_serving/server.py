@@ -33,7 +33,7 @@ if device.lower() == 'gpu':
 if backend == 'trt':
     option.use_trt_backend()
 else:
-    option.use_paddle_infer_backend()
+    option.use_ort_backend()  # Note: paddle backend removed
 
 det_option = option
 det_option.set_trt_input_shape("x", [1, 3, 64, 64], [1, 3, 640, 640],

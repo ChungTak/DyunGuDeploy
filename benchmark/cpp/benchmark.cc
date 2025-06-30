@@ -83,7 +83,7 @@ static std::vector<int64_t> GetInt64Shape(const std::vector<int>& shape) {
 
 static fastdeploy::ModelFormat GetModelFormat(const std::string& model_format) {
   if (model_format == "PADDLE") {
-    return fastdeploy::ModelFormat::PADDLE;
+    return fastdeploy::ModelFormat::ONNX;
   } else if (model_format == "ONNX") {
     return fastdeploy::ModelFormat::ONNX;
   } else if (model_format == "RKNN") {
@@ -93,7 +93,7 @@ static fastdeploy::ModelFormat GetModelFormat(const std::string& model_format) {
   } else if (model_format == "SOPHGO") {
     return fastdeploy::ModelFormat::SOPHGO;
   } else {
-    return fastdeploy::ModelFormat::PADDLE;
+    return fastdeploy::ModelFormat::ONNX;
   }
 }
 
@@ -120,7 +120,7 @@ static void RuntimeProfiling(int argc, char* argv[]) {
     return;
   }
   if (FLAGS_disable_mkldnn) {
-    option.paddle_infer_option.enable_mkldnn = false;
+    // Note: paddle_infer_option removed
   }
   std::unordered_map<std::string, std::string> config_info;
   benchmark::ResultManager::LoadBenchmarkConfig(FLAGS_config_path,
@@ -141,7 +141,7 @@ static void RuntimeProfiling(int argc, char* argv[]) {
   // Check model path and model format
   std::string model_name, params_name, config_name;
   std::string model_file, params_file;
-  auto model_format = fastdeploy::ModelFormat::PADDLE;
+  auto model_format = fastdeploy::ModelFormat::ONNX;
   if (FLAGS_model_file != "UNKNOWN") {
     // Set model file/param/format via command line
     if (FLAGS_model != "") {
@@ -152,7 +152,7 @@ static void RuntimeProfiling(int argc, char* argv[]) {
       params_file = FLAGS_params_file;
     }
     model_format = GetModelFormat(FLAGS_model_format);
-    if (model_format == fastdeploy::ModelFormat::PADDLE &&
+    if (model_format == fastdeploy::ModelFormat::ONNX &&
         FLAGS_params_file == "") {
       if (config_info["backend"] != "lite") {
         std::cout << "[ERROR] params_file can not be empty for PADDLE"
@@ -196,8 +196,9 @@ static void RuntimeProfiling(int argc, char* argv[]) {
 
   // Set tensorrt shapes
   if (config_info["backend"] == "paddle_trt") {
-    option.paddle_infer_option.collect_trt_shape = true;
-    option.paddle_infer_option.collect_trt_shape_by_device = 
+    // Note: paddle_infer_option has been removed
+    option.trt_option.enable_fp16 = true;
+    // Note: paddle_infer_option removed
       FLAGS_collect_trt_shape_by_device;
   }
   if (config_info["backend"] == "paddle_trt" ||
@@ -326,14 +327,14 @@ static void showInputInfos(int argc, char* argv[]) {
     return;
   }
   if (FLAGS_disable_mkldnn) {
-    option.paddle_infer_option.enable_mkldnn = false;
+    // Note: paddle_infer_option removed
   }
   std::unordered_map<std::string, std::string> config_info;
   benchmark::ResultManager::LoadBenchmarkConfig(FLAGS_config_path,
                                                 &config_info);
   std::string model_name, params_name, config_name;
   std::string model_file, params_file;
-  auto model_format = fastdeploy::ModelFormat::PADDLE;
+  auto model_format = fastdeploy::ModelFormat::ONNX;
   if (FLAGS_model_file != "UNKNOWN") {
     // Set model file/param/format via command line
     if (FLAGS_model != "") {
@@ -344,7 +345,7 @@ static void showInputInfos(int argc, char* argv[]) {
       params_file = FLAGS_params_file;
     }
     model_format = GetModelFormat(FLAGS_model_format);
-    if (model_format == fastdeploy::ModelFormat::PADDLE &&
+    if (model_format == fastdeploy::ModelFormat::ONNX &&
         FLAGS_params_file == "") {
       if (config_info["backend"] != "lite") {
         std::cout << "[ERROR] params_file can not be empty for PADDLE"

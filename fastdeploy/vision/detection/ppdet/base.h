@@ -43,7 +43,7 @@ class FASTDEPLOY_DECL PPDetBase : public FastDeployModel {
   PPDetBase(const std::string& model_file, const std::string& params_file,
           const std::string& config_file,
           const RuntimeOption& custom_option = RuntimeOption(),
-          const ModelFormat& model_format = ModelFormat::PADDLE);
+          const ModelFormat& model_format = ModelFormat::ONNX);
 
   /** \brief Clone a new PaddleDetModel with less memory usage when multiple instances of the same model are created
    *

@@ -49,7 +49,7 @@ Java_com_baidu_paddle_fastdeploy_text_uie_UIEModel_bindNative(
   auto c_batch_size = static_cast<int>(batch_size);
   auto c_runtime_option = fni::NewCxxRuntimeOption(env, runtime_option);
   auto c_schema_language = static_cast<text::SchemaLanguage>(schema_language);
-  auto c_paddle_model_format = fastdeploy::ModelFormat::PADDLE;
+  auto c_paddle_model_format = fastdeploy::ModelFormat::ONNX;
   auto c_model_ptr = new text::UIEModel(
       c_model_file, c_params_file, c_vocab_file, c_position_prob, c_max_length,
       c_schema, c_batch_size, c_runtime_option, c_paddle_model_format,

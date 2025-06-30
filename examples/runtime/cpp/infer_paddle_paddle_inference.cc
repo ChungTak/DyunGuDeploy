@@ -29,9 +29,9 @@ int main(int argc, char* argv[]) {
   runtime_option.SetModelPath(model_file, params_file);
   runtime_option.UseCpu();
  
-  // If need to configure Paddle Inference backend for more option, we can configure runtime_option.paddle_infer_option
-  // refer https://baidu-paddle.github.io/fastdeploy-api/cpp/html/structfastdeploy_1_1PaddleBackendOption.html
-  runtime_option.paddle_infer_option.enable_mkldnn = true;
+  // Note: paddle_infer_option has been removed, using ORT backend instead
+  runtime_option.UseOrtBackend();
+  // Note: enable_mkldnn is now handled automatically
 
   fd::Runtime runtime;
   assert(runtime.Init(runtime_option));

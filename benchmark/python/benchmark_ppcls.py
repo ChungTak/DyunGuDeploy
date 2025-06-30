@@ -102,8 +102,8 @@ def build_option(args):
         elif backend in ["trt", "paddle_trt"]:
             option.use_trt_backend()
             if backend == "paddle_trt":
-                option.use_paddle_infer_backend()
-                option.paddle_infer_option.enable_trt = True
+                option.use_ort_backend()  # Note: paddle backend removed
+                option.trt_option.enable_fp16 = True  # Note: paddle_infer_option removed
                 # Set max_batch_size 1 for best performance
                 option.trt_option.max_batch_size = 1
             if enable_trt_fp16:

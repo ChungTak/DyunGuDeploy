@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
   } else if (flag == 5) {
     option.UseGpu();
     option.UsePaddleInferBackend();
-    option.paddle_infer_option.enable_trt = true;
+    option.trt_option.enable_fp16 = true;  // Note: paddle_infer_option removed
   } else if (flag == 6) {
     option.UseGpu();
     option.UseOrtBackend();  // ONNX Runtime

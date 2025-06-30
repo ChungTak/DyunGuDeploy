@@ -68,7 +68,7 @@ fastdeploy::vision::faceid::AdaFace(
         const string& model_file,
         const string& params_file = "",
         const RuntimeOption& runtime_option = RuntimeOption(),
-        const ModelFormat& model_format = ModelFormat::PADDLE)
+        const ModelFormat& model_format = ModelFormat::ONNX)
 ```
 
 AdaFace模型加载和初始化，如果使用PaddleInference推理，model_file和params_file为PaddleInference模型格式;

@@ -25,10 +25,6 @@
 #include "fastdeploy/runtime/backends/tensorrt/trt_backend.h"
 #endif
 
-#ifdef ENABLE_PADDLE_BACKEND
-#include "fastdeploy/runtime/backends/paddle/paddle_backend.h"
-#endif
-
 #ifdef ENABLE_POROS_BACKEND
 #include "fastdeploy/runtime/backends/poros/poros_backend.h"
 #endif
@@ -151,8 +147,6 @@ bool Runtime::Init(const RuntimeOption& _option) {
     CreateOrtBackend();
   } else if (option.backend == Backend::TRT) {
     CreateTrtBackend();
-  } else if (option.backend == Backend::PDINFER) {
-    CreatePaddleBackend();
   } else if (option.backend == Backend::OPENVINO) {
     CreateOpenVINOBackend();
   } else if (option.backend == Backend::LITE) {
@@ -273,20 +267,6 @@ void Runtime::ReleaseModelMemoryBuffer() {
   }
 }
 
-void Runtime::CreatePaddleBackend() {
-#ifdef ENABLE_PADDLE_BACKEND
-  backend_ = utils::make_unique<PaddleBackend>();
-  FDASSERT(backend_->Init(option),
-           "Failed to initialized Paddle Inference backend.");
-#else
-  FDASSERT(false,
-           "PaddleBackend is not available, please compiled with "
-           "ENABLE_PADDLE_BACKEND=ON.");
-#endif
-  FDINFO << "Runtime initialized with Backend::PDINFER in " << option.device
-         << "." << std::endl;
-}
-
 void Runtime::CreateOpenVINOBackend() {
 #ifdef ENABLE_OPENVINO_BACKEND
   backend_ = utils::make_unique<OpenVINOBackend>();
@@ -395,10 +375,9 @@ void Runtime::CreateSophgoNPUBackend() {
 
 Runtime* Runtime::Clone(void* stream, int device_id) {
   Runtime* runtime = new Runtime();
-  if (option.backend != Backend::OPENVINO &&
-      option.backend != Backend::PDINFER) {
+  if (option.backend != Backend::OPENVINO) {
     runtime->Init(option);
-    FDWARNING << "Only OpenVINO/Paddle Inference support \
+    FDWARNING << "Only OpenVINO support \
                   clone engine to  reduce CPU/GPU memory usage now. For "
               << option.backend
               << ", FastDeploy will create a new engine which \

@@ -44,7 +44,7 @@ class FASTDEPLOY_DECL StructureV2Table : public FastDeployModel {
                    const std::string& params_file = "",
                    const std::string& table_char_dict_path = "",
                    const RuntimeOption& custom_option = RuntimeOption(),
-                   const ModelFormat& model_format = ModelFormat::PADDLE);
+                   const ModelFormat& model_format = ModelFormat::ONNX);
 
   /** \brief Clone a new StructureV2Table Recognizer with less memory usage when multiple instances of the same model are created
    *

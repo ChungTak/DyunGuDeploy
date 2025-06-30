@@ -46,9 +46,9 @@ def build_option(args):
     elif args.backend.lower() == "pptrt":
         assert args.device.lower(
         ) == "gpu", "Paddle-TensorRT backend require inference on device GPU."
-        option.use_paddle_infer_backend()
-        option.paddle_infer_option.enable_trt = True
-        option.paddle_infer_option.collect_trt_shape = True
+        option.use_ort_backend()  # Note: paddle backend removed
+        option.trt_option.enable_fp16 = True  # Note: paddle_infer_option removed
+        option# Note: paddle_infer_option removed
         option.trt_option.set_shape("image", [1, 3, 640, 640],
                                     [1, 3, 640, 640], [1, 3, 640, 640])
         option.trt_option.set_shape("scale_factor", [1, 2], [1, 2], [1, 2])
@@ -58,7 +58,7 @@ def build_option(args):
         option.use_ort_backend()
 
     elif args.backend.lower() == "paddle":
-        option.use_paddle_infer_backend()
+        option.use_ort_backend()  # Note: paddle backend removed
 
     elif args.backend.lower() == "openvino":
         assert args.device.lower(

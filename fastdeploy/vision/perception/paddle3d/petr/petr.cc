@@ -22,14 +22,15 @@ Petr::Petr(const std::string& model_file, const std::string& params_file,
            const std::string& config_file, const RuntimeOption& custom_option,
            const ModelFormat& model_format)
     : preprocessor_(config_file) {
-  valid_cpu_backends = {Backend::PDINFER};
-  valid_gpu_backends = {Backend::PDINFER};
+  valid_cpu_backends = {Backend::ORT, Backend::OPENVINO, Backend::LITE};
+  valid_gpu_backends = {Backend::ORT, Backend::TRT};
 
   runtime_option = custom_option;
   runtime_option.model_format = model_format;
   runtime_option.model_file = model_file;
   runtime_option.params_file = params_file;
-  runtime_option.paddle_infer_option.enable_mkldnn = false;
+  // Note: MKLDNN optimization disabled for better compatibility
+  // runtime_option.openvino_option or runtime_option.ort_option can be configured instead
   initialized = Initialize();
 }
 

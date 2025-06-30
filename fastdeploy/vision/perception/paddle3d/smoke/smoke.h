@@ -35,7 +35,7 @@ class FASTDEPLOY_DECL Smoke : public FastDeployModel {
   Smoke(const std::string& model_file, const std::string& params_file,
          const std::string& config_file,
          const RuntimeOption& custom_option = RuntimeOption(),
-         const ModelFormat& model_format = ModelFormat::PADDLE);
+         const ModelFormat& model_format = ModelFormat::ONNX);
 
   std::string ModelName() const { return "Paddle3D/smoke"; }
 

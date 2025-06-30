@@ -76,9 +76,9 @@ def build_option(args):
     else:
         option.use_trt_backend()
         if args.backend == 'paddle_trt':
-            option.paddle_infer_option.collect_trt_shape = True
-            option.use_paddle_infer_backend()
-            option.paddle_infer_option.enable_trt = True
+            option# Note: paddle_infer_option removed
+            option.use_ort_backend()  # Note: paddle backend removed
+            option.trt_option.enable_fp16 = True  # Note: paddle_infer_option removed
         trt_file = os.path.join(args.model_dir, "infer.trt")
         option.trt_option.set_shape(
             'input_ids',

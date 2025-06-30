@@ -42,7 +42,7 @@ fastdeploy::vision::generation::AnimeGAN(
         const string& model_file,
         const string& params_file = "",
         const RuntimeOption& runtime_option = RuntimeOption(),
-        const ModelFormat& model_format = ModelFormat::PADDLE)
+        const ModelFormat& model_format = ModelFormat::ONNX)
 ```
 
 AnimeGAN model loading and initialization, among which model_file is the exported Paddle model file and params_file is the parameter file.

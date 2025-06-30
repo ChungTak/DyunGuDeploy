@@ -22,8 +22,8 @@ EDVR::EDVR(const std::string& model_file, const std::string& params_file,
            const RuntimeOption& custom_option,
            const ModelFormat& model_format) {
   // unsupported ORT backend
-  valid_cpu_backends = {Backend::PDINFER, Backend::ORT, Backend::OPENVINO};
-  valid_gpu_backends = {Backend::PDINFER, Backend::TRT, Backend::ORT};
+  valid_cpu_backends = {Backend::ORT, Backend::OPENVINO};
+  valid_gpu_backends = {Backend::TRT, Backend::ORT};
 
   runtime_option = custom_option;
   runtime_option.model_format = model_format;

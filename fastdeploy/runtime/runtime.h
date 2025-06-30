@@ -112,7 +112,6 @@ struct FASTDEPLOY_DECL Runtime {
 
  private:
   void CreateOrtBackend();
-  void CreatePaddleBackend();
   void CreateTrtBackend();
   void CreateOpenVINOBackend();
   void CreateLiteBackend();

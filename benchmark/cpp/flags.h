@@ -180,7 +180,7 @@ static bool UpdateModelResourceName(
   std::string* config_name, fastdeploy::ModelFormat* model_format,
   std::unordered_map<std::string, std::string>& config_info,
   bool use_config_file = true, bool use_quant_model = false) {
-  *model_format = fastdeploy::ModelFormat::PADDLE;
+  *model_format = fastdeploy::ModelFormat::ONNX;
   if (!(GetModelResoucesNameFromDir(FLAGS_model, model_name, "pdmodel")
     && GetModelResoucesNameFromDir(FLAGS_model, params_name, "pdiparams"))) {
     std::cout << "Can not find Paddle model resources." << std::endl;

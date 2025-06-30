@@ -155,8 +155,8 @@ int main(int argc, char *argv[]) {
   } else if (flag == 5) {
     option.UseGpu();
     option.UsePaddleInferBackend();
-    option.paddle_infer_option.collect_trt_shape = true;
-    option.paddle_infer_option.enable_trt = true;  // Paddle-TensorRT
+    option// Note: paddle_infer_option removed, using TRT backend
+    option.trt_option.enable_fp16 = true;  // Note: paddle_infer_option removed  // Paddle-TensorRT
   } else if (flag == 6) {
     option.UseGpu();
     option.UseOrtBackend();  // ONNX Runtime

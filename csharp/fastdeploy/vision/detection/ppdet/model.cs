@@ -36,7 +36,7 @@ public class PPYOLOE {
    */
   public PPYOLOE(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -155,7 +155,7 @@ public class PicoDet {
 
   public PicoDet(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -279,7 +279,7 @@ public class PPYOLO {
 
   public PPYOLO(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -402,7 +402,7 @@ public class YOLOv3 {
 
   public YOLOv3(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -525,7 +525,7 @@ public class PaddleYOLOX {
 
   public PaddleYOLOX(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -648,7 +648,7 @@ public class FasterRCNN {
 
   public FasterRCNN(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -771,7 +771,7 @@ public class MaskRCNN {
 
   public MaskRCNN(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -894,7 +894,7 @@ public class SSD {
 
   public SSD(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -1017,7 +1017,7 @@ public class PaddleYOLOv5 {
 
   public PaddleYOLOv5(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -1140,7 +1140,7 @@ public class PaddleYOLOv6 {
 
   public PaddleYOLOv6(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -1263,7 +1263,7 @@ public class PaddleYOLOv7 {
 
   public PaddleYOLOv7(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -1386,7 +1386,7 @@ public class PaddleYOLOv8 {
 
   public PaddleYOLOv8(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -1509,7 +1509,7 @@ public class RTMDet {
 
   public RTMDet(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -1632,7 +1632,7 @@ public class CascadeRCNN {
 
   public CascadeRCNN(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -1755,7 +1755,7 @@ public class PSSDet {
 
   public PSSDet(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -1878,7 +1878,7 @@ public class RetinaNet {
 
   public RetinaNet(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -2001,7 +2001,7 @@ public class FCOS {
 
   public FCOS(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -2124,7 +2124,7 @@ public class TTFNet {
 
   public TTFNet(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -2247,7 +2247,7 @@ public class TOOD {
 
   public TOOD(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -2370,7 +2370,7 @@ public class GFL {
 
   public GFL(string model_file, string params_file, string config_file,
                  RuntimeOption custom_option = null,
-                 ModelFormat model_format = ModelFormat.PADDLE) {
+                 ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }

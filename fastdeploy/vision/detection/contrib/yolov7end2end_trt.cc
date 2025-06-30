@@ -69,8 +69,8 @@ YOLOv7End2EndTRT::YOLOv7End2EndTRT(const std::string& model_file,
     valid_cpu_backends = {};              // NO CPU
     valid_gpu_backends = {Backend::TRT};  // NO ORT
   } else {
-    valid_cpu_backends = {Backend::PDINFER};
-    valid_gpu_backends = {Backend::PDINFER};
+    valid_cpu_backends = {Backend::ORT, Backend::OPENVINO, Backend::LITE};
+    valid_gpu_backends = {Backend::ORT, Backend::TRT};
   }
   runtime_option = custom_option;
   runtime_option.model_format = model_format;

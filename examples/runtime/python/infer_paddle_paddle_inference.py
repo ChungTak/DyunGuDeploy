@@ -26,7 +26,7 @@ option.set_model_path("mobilenetv2/inference.pdmodel",
 
 # **** CPU 配置 ****
 option.use_cpu()
-option.use_paddle_infer_backend()
+option.use_ort_backend()  # Note: paddle backend removed
 option.set_cpu_thread_num(12)
 
 # **** GPU 配置 ***

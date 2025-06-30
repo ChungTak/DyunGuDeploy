@@ -104,18 +104,17 @@ def build_option(args):
 
     elif args.backend.lower() == "pptrt":
         assert args.device.lower(
-        ) == "gpu", "Paddle-TensorRT backend require inference on device GPU."
-        det_option.use_paddle_infer_backend()
-        det_option.paddle_infer_option.collect_trt_shape = True
-        det_option.paddle_infer_option.enable_trt = True
-
-        cls_option.use_paddle_infer_backend()
-        cls_option.paddle_infer_option.collect_trt_shape = True
-        cls_option.paddle_infer_option.enable_trt = True
-
-        rec_option.use_paddle_infer_backend()
-        rec_option.paddle_infer_option.collect_trt_shape = True
-        rec_option.paddle_infer_option.enable_trt = True
+        ) == "gpu", "Paddle-TensorRT backend require inference on device GPU."        det_option.use_ort_backend()  # Using ORT instead of paddle
+        # Note: paddle_infer_option has been removed
+        det_option.trt_option.enable_fp16 = True
+        
+        cls_option.use_ort_backend()  # Using ORT instead of paddle
+        # Note: paddle_infer_option has been removed
+        det_option.trt_option.enable_fp16 = True
+        
+        rec_option.use_ort_backend()  # Using ORT instead of paddle
+        # Note: paddle_infer_option has been removed
+        rec_option.trt_option.enable_fp16 = True
 
         # If use TRT backend, the dynamic shape will be set as follow.
         # We recommend that users set the length and height of the detection model to a multiple of 32.
@@ -140,9 +139,9 @@ def build_option(args):
         rec_option.use_ort_backend()
 
     elif args.backend.lower() == "paddle":
-        det_option.use_paddle_infer_backend()
-        cls_option.use_paddle_infer_backend()
-        rec_option.use_paddle_infer_backend()
+        det_option.use_ort_backend()  # Using ORT instead of paddle
+        cls_option.use_ort_backend()  # Using ORT instead of paddle
+        rec_option.use_ort_backend()  # Using ORT instead of paddle
 
     elif args.backend.lower() == "openvino":
         assert args.device.lower(

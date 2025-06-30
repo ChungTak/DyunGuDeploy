@@ -60,7 +60,6 @@ option(WITH_IPU "Whether WITH_IPU=ON, will enable paddle-infernce-ipu" OFF)
 option(WITH_OPENCL "Whether WITH_OPENCL=ON, will enable paddle-lite-gpu" OFF)
 option(ENABLE_ORT_BACKEND "Whether to enable onnxruntime backend." OFF)
 option(ENABLE_TRT_BACKEND "Whether to enable tensorrt backend." OFF)
-option(ENABLE_PADDLE_BACKEND "Whether to enable paddle backend." OFF)
 option(ENABLE_POROS_BACKEND "Whether to enable poros backend." OFF)
 option(ENABLE_OPENVINO_BACKEND "Whether to enable openvino backend." OFF)
 option(ENABLE_RKNPU2_BACKEND "Whether to enable RKNPU2 backend." OFF)
@@ -139,10 +138,6 @@ if (WITH_KUNLUNXIN)
 endif()
 
 if(WITH_IPU)
-  if(NOT ENABLE_PADDLE_BACKEND)
-    message("Will force to set ENABLE_PADDLE_BACKEND when build with GraphCore IPU.")
-    set(ENABLE_PADDLE_BACKEND ON)
-  endif()
   add_definitions(-DWITH_IPU)
 endif()
 
@@ -164,7 +159,6 @@ configure_file(${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/core/config.h.
 configure_file(${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/pybind/main.cc.in ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/pybind/main.cc)
 file(GLOB_RECURSE ALL_DEPLOY_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/*.cc)
 file(GLOB_RECURSE DEPLOY_ORT_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/runtime/backends/ort/*.cc)
-file(GLOB_RECURSE DEPLOY_PADDLE_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/runtime/backends/paddle/*.cc)
 file(GLOB_RECURSE DEPLOY_POROS_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/runtime/backends/poros/*.cc)
 file(GLOB_RECURSE DEPLOY_TRT_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/runtime/backends/tensorrt/*.cc ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/runtime/backends/tensorrt/*.cpp)
 file(GLOB_RECURSE DEPLOY_OPENVINO_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/runtime/backends/openvino/*.cc)
@@ -178,26 +172,21 @@ file(GLOB_RECURSE DEPLOY_PIPELINE_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/f
 file(GLOB_RECURSE DEPLOY_VISION_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/vision/*.cc)
 file(GLOB_RECURSE DEPLOY_TEXT_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/text/*.cc)
 file(GLOB_RECURSE DEPLOY_PYBIND_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/pybind/*.cc ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/*_pybind.cc)
-file(GLOB_RECURSE DEPLOY_PADDLE_CUSTOM_OP_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/runtime/backends/paddle/ops/*.cc)
 if(WITH_GPU)
   file(GLOB_RECURSE DEPLOY_CUDA_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/*.cu)
   list(APPEND ALL_DEPLOY_SRCS ${DEPLOY_CUDA_SRCS})
-  file(GLOB_RECURSE DEPLOY_PADDLE_CUSTOM_OP_CUDA_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/runtime/backends/paddle/ops/*.cu)
-  list(REMOVE_ITEM ALL_DEPLOY_SRCS ${DEPLOY_PADDLE_CUSTOM_OP_CUDA_SRCS})
   file(GLOB_RECURSE DEPLOY_VISION_CUDA_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/vision/*.cu)
   list(APPEND DEPLOY_VISION_SRCS ${DEPLOY_VISION_CUDA_SRCS})
   file(GLOB_RECURSE DEPLOY_TEXT_CUDA_SRCS ${PROJECT_SOURCE_DIR}/${CSRCS_DIR_NAME}/fastdeploy/text/*.cu)
   list(APPEND DEPLOY_TEXT_SRCS ${DEPLOY_TEXT_CUDA_SRCS})
 endif()
-list(REMOVE_ITEM DEPLOY_PADDLE_SRCS ${DEPLOY_PADDLE_CUSTOM_OP_SRCS})
-list(REMOVE_ITEM ALL_DEPLOY_SRCS ${DEPLOY_ORT_SRCS} ${DEPLOY_PADDLE_SRCS}
+list(REMOVE_ITEM ALL_DEPLOY_SRCS ${DEPLOY_ORT_SRCS}
                                  ${DEPLOY_POROS_SRCS} ${DEPLOY_TRT_SRCS}
                                  ${DEPLOY_OPENVINO_SRCS} ${DEPLOY_LITE_SRCS}
                                  ${DEPLOY_VISION_SRCS} ${DEPLOY_TEXT_SRCS}
                                  ${DEPLOY_PIPELINE_SRCS} ${DEPLOY_RKNPU2_SRCS}
                                  ${DEPLOY_SOPHGO_SRCS} ${DEPLOY_ENCRYPTION_SRCS}
-                                 ${DEPLOY_HORIZON_SRCS} ${DEPLOY_TVM_SRCS}
-                                 ${DEPLOY_PADDLE_CUSTOM_OP_SRCS})
+                                 ${DEPLOY_HORIZON_SRCS} ${DEPLOY_TVM_SRCS})
 
 set(DEPEND_LIBS "")
 
@@ -234,26 +223,6 @@ if(ENABLE_LITE_BACKEND)
   include(${PROJECT_SOURCE_DIR}/cmake/paddlelite.cmake)
   list(APPEND ALL_DEPLOY_SRCS ${DEPLOY_LITE_SRCS})
   list(APPEND DEPEND_LIBS external_paddle_lite)
-endif()
-
-if(ENABLE_PADDLE_BACKEND)
-  add_definitions(-DENABLE_PADDLE_BACKEND)
-  list(APPEND ALL_DEPLOY_SRCS ${DEPLOY_PADDLE_SRCS})
-  include(${PROJECT_SOURCE_DIR}/cmake/paddle_inference.cmake)
-  list(APPEND DEPEND_LIBS external_paddle_inference)
-  if(external_dnnl_FOUND)
-    list(APPEND DEPEND_LIBS external_dnnl external_omp)
-  endif()
-  if(external_ort_FOUND)
-    list(APPEND DEPEND_LIBS external_p2o external_ort)
-  endif()
-  if(PADDLEINFERENCE_API_CUSTOM_OP)
-    set_paddle_custom_ops_compatible_policy()
-    list(APPEND ALL_DEPLOY_SRCS ${DEPLOY_PADDLE_CUSTOM_OP_SRCS})
-    if(WITH_GPU)
-      list(APPEND ALL_DEPLOY_SRCS ${DEPLOY_PADDLE_CUSTOM_OP_CUDA_SRCS})
-    endif()
-  endif()
 endif()
 
 if(ENABLE_OPENVINO_BACKEND)
@@ -516,10 +485,6 @@ if(MSVC)
 endif()
 
 target_link_libraries(${LIBRARY_NAME} ${DEPEND_LIBS})
-
-if(ENABLE_PADDLE_BACKEND)
-  set_paddle_encrypt_auth_compatible_policy(${LIBRARY_NAME})
-endif()
 
 if(ANDROID)
   set_android_extra_libraries_target()

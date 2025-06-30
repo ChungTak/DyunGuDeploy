@@ -26,14 +26,14 @@ int main(int argc, char* argv[]) {
 
   // read model From disk.
   // runtime_option.SetModelPath(model_file, params_file,
-  // fd::ModelFormat::PADDLE);
+  // fd::ModelFormat::ONNX);
 
   // read model from buffer
   std::string model_buffer, params_buffer;
   fd::ReadBinaryFromFile(model_file, &model_buffer);
   fd::ReadBinaryFromFile(params_file, &params_buffer);
   runtime_option.SetModelBuffer(model_buffer, params_buffer,
-                                fd::ModelFormat::PADDLE);
+                                fd::ModelFormat::ONNX);
 
   // setup other option
   runtime_option.SetCpuThreadNum(12);

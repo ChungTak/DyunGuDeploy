@@ -133,14 +133,12 @@ void BindRuntime(pybind11::module& m) {
       .value("ORT", Backend::ORT)
       .value("TRT", Backend::TRT)
       .value("POROS", Backend::POROS)
-      .value("PDINFER", Backend::PDINFER)
       .value("RKNPU2", Backend::RKNPU2)
       .value("SOPHGOTPU", Backend::SOPHGOTPU)
       .value("TVM", Backend::TVM)
       .value("LITE", Backend::LITE);
   pybind11::enum_<ModelFormat>(m, "ModelFormat", pybind11::arithmetic(),
                                "ModelFormat for inference.")
-      .value("PADDLE", ModelFormat::PADDLE)
       .value("TORCHSCRIPT", ModelFormat::TORCHSCRIPT)
       .value("RKNN", ModelFormat::RKNN)
       .value("SOPHGO", ModelFormat::SOPHGO)

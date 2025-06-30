@@ -29,9 +29,9 @@ PaddleSegModel::PaddleSegModel(const std::string& model_file,
   if (model_format == ModelFormat::SOPHGO) {
     valid_sophgonpu_backends = {Backend::SOPHGOTPU};
   } else {
-    valid_cpu_backends = {Backend::OPENVINO, Backend::PDINFER, Backend::ORT,
+    valid_cpu_backends = {Backend::OPENVINO, Backend::ORT,
                           Backend::LITE};
-    valid_gpu_backends = {Backend::PDINFER, Backend::ORT, Backend::TRT};
+    valid_gpu_backends = {Backend::ORT, Backend::TRT};
   }
   valid_rknpu_backends = {Backend::RKNPU2};
   valid_timvx_backends = {Backend::LITE};

@@ -38,7 +38,7 @@ class FASTDEPLOY_DECL StructureV2SERViLayoutXLMModel : public FastDeployModel {
                   const std::string& params_file,
                   const std::string& config_file,
                   const RuntimeOption& custom_option = RuntimeOption(),
-                  const ModelFormat& model_format = ModelFormat::PADDLE);
+                  const ModelFormat& model_format = ModelFormat::ONNX);
 
   /** \brief Clone a new StructureV2SERViLayoutXLMModel with less memory usage when multiple instances of the same model are created
    *

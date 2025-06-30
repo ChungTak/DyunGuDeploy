@@ -43,7 +43,7 @@ class FASTDEPLOY_DECL Recognizer : public FastDeployModel {
   Recognizer(const std::string& model_file, const std::string& params_file = "",
              const std::string& label_path = "",
              const RuntimeOption& custom_option = RuntimeOption(),
-             const ModelFormat& model_format = ModelFormat::PADDLE);
+             const ModelFormat& model_format = ModelFormat::ONNX);
 
   /// Get model's name
   std::string ModelName() const { return "ppocr/ocr_rec"; }

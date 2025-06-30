@@ -30,7 +30,7 @@ class FASTDEPLOY_DECL BasicVSR : public PPMSVSR {
    */
   BasicVSR(const std::string& model_file, const std::string& params_file,
            const RuntimeOption& custom_option = RuntimeOption(),
-           const ModelFormat& model_format = ModelFormat::PADDLE);
+           const ModelFormat& model_format = ModelFormat::ONNX);
   /// model name contained BasicVSR
   std::string ModelName() const override { return "BasicVSR"; }
 };

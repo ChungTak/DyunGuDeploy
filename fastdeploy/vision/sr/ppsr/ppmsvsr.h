@@ -30,7 +30,7 @@ class FASTDEPLOY_DECL PPMSVSR : public FastDeployModel {
    */
   PPMSVSR(const std::string& model_file, const std::string& params_file,
           const RuntimeOption& custom_option = RuntimeOption(),
-          const ModelFormat& model_format = ModelFormat::PADDLE);
+          const ModelFormat& model_format = ModelFormat::ONNX);
   /// model name contained PP-MSVSR。
   std::string ModelName() const override { return "PPMSVSR"; }
   /**

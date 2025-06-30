@@ -30,7 +30,7 @@ class FASTDEPLOY_DECL EDVR : public PPMSVSR {
    */
   EDVR(const std::string& model_file, const std::string& params_file,
        const RuntimeOption& custom_option = RuntimeOption(),
-       const ModelFormat& model_format = ModelFormat::PADDLE);
+       const ModelFormat& model_format = ModelFormat::ONNX);
   /// model name contained EDVR
   std::string ModelName() const override { return "EDVR"; }
 

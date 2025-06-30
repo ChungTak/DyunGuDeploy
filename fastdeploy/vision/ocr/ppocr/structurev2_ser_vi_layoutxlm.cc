@@ -24,14 +24,14 @@ StructureV2SERViLayoutXLMModel::StructureV2SERViLayoutXLMModel(
     const std::string& model_file, const std::string& params_file,
     const std::string& config_file, const RuntimeOption& custom_option,
     const ModelFormat& model_format) {
-  if (model_format == ModelFormat::PADDLE) {
-    valid_cpu_backends = {Backend::OPENVINO, Backend::PDINFER, Backend::ORT,
+  if (model_format == ModelFormat::ONNX) {
+    valid_cpu_backends = {Backend::OPENVINO, Backend::ORT,
                           Backend::LITE};
-    valid_gpu_backends = {Backend::ORT, Backend::PDINFER, Backend::TRT};
+    valid_gpu_backends = {Backend::ORT, Backend::TRT};
     valid_timvx_backends = {Backend::LITE};
     valid_ascend_backends = {Backend::LITE};
     valid_kunlunxin_backends = {Backend::LITE};
-    valid_ipu_backends = {Backend::PDINFER};
+    valid_ipu_backends = {};
     valid_directml_backends = {Backend::ORT};
   } else if (model_format == ModelFormat::SOPHGO) {
     valid_sophgonpu_backends = {Backend::SOPHGOTPU};

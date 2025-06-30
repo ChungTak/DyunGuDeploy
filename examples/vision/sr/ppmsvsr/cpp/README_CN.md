@@ -45,7 +45,7 @@ fastdeploy::vision::sr::PPMSVSR(
         const string& model_file,
         const string& params_file = "",
         const RuntimeOption& runtime_option = RuntimeOption(),
-        const ModelFormat& model_format = ModelFormat::PADDLE)
+        const ModelFormat& model_format = ModelFormat::ONNX)
 ```
 
 PP-MSVSR模型加载和初始化，其中model_file为导出的Paddle模型格式。

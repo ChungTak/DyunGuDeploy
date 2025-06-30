@@ -42,7 +42,7 @@ fastdeploy::vision::generation::AnimeGAN(
         const string& model_file,
         const string& params_file = "",
         const RuntimeOption& runtime_option = RuntimeOption(),
-        const ModelFormat& model_format = ModelFormat::PADDLE)
+        const ModelFormat& model_format = ModelFormat::ONNX)
 ```
 
 AnimeGAN模型加载和初始化，其中model_file为导出的Paddle模型结构文件，params_file为模型参数文件。

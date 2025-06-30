@@ -45,7 +45,7 @@ fastdeploy::vision::sr::EDVR(
         const string& model_file,
         const string& params_file = "",
         const RuntimeOption& runtime_option = RuntimeOption(),
-        const ModelFormat& model_format = ModelFormat::PADDLE)
+        const ModelFormat& model_format = ModelFormat::ONNX)
 ```
 
 EDVR model loading and initialization, among which model_file is the exported Paddle model format.

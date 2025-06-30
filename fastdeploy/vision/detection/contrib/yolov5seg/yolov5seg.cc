@@ -25,8 +25,8 @@ YOLOv5Seg::YOLOv5Seg(const std::string& model_file, const std::string& params_fi
     valid_cpu_backends = {Backend::OPENVINO, Backend::ORT};
     valid_gpu_backends = {Backend::ORT, Backend::TRT};
   } else {
-    valid_cpu_backends = {Backend::PDINFER, Backend::ORT, Backend::LITE};
-    valid_gpu_backends = {Backend::PDINFER, Backend::ORT, Backend::TRT};
+    valid_cpu_backends = {Backend::ORT, Backend::LITE};
+    valid_gpu_backends = {Backend::ORT, Backend::TRT};
   }
   runtime_option = custom_option;
   runtime_option.model_format = model_format;

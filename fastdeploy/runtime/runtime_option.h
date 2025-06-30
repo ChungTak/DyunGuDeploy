@@ -26,7 +26,6 @@
 #include "fastdeploy/runtime/backends/lite/option.h"
 #include "fastdeploy/runtime/backends/openvino/option.h"
 #include "fastdeploy/runtime/backends/ort/option.h"
-#include "fastdeploy/runtime/backends/paddle/option.h"
 #include "fastdeploy/runtime/backends/poros/option.h"
 #include "fastdeploy/runtime/backends/rknpu2/option.h"
 #include "fastdeploy/runtime/backends/sophgo/option.h"
@@ -47,7 +46,7 @@ struct FASTDEPLOY_DECL RuntimeOption {
    */
   void SetModelPath(const std::string& model_path,
                     const std::string& params_path = "",
-                    const ModelFormat& format = ModelFormat::PADDLE);
+                    const ModelFormat& format = ModelFormat::ONNX);
 
   /** \brief Specify the memory buffer of model and parameter. Used when model and params are loaded directly from memory
    *
@@ -57,7 +56,7 @@ struct FASTDEPLOY_DECL RuntimeOption {
    */
   void SetModelBuffer(const std::string& model_buffer,
                       const std::string& params_buffer = "",
-                      const ModelFormat& format = ModelFormat::PADDLE);
+                      const ModelFormat& format = ModelFormat::ONNX);
 
   /** \brief When loading encrypted model, encryption_key is required to decrypte model
    *
@@ -123,8 +122,6 @@ struct FASTDEPLOY_DECL RuntimeOption {
    * @brief Set number of cpu threads while inference on CPU, by default it will decided by the different backends
    */
   void SetCpuThreadNum(int thread_num);
-  /// Set Paddle Inference as inference backend, support CPU/GPU
-  void UsePaddleInferBackend() { return UsePaddleBackend(); }
   /// Set ONNX Runtime as inference backend, support CPU/GPU
   void UseOrtBackend();
   /// Set SOPHGO Runtime as inference backend, support SOPHGO
@@ -151,8 +148,6 @@ struct FASTDEPLOY_DECL RuntimeOption {
   OrtBackendOption ort_option;
   /// Option to configure TensorRT backend
   TrtBackendOption trt_option;
-  /// Option to configure Paddle Inference backend
-  PaddleBackendOption paddle_infer_option;
   /// Option to configure Poros backend
   PorosBackendOption poros_option;
   /// Option to configure OpenVINO backend
@@ -210,7 +205,7 @@ struct FASTDEPLOY_DECL RuntimeOption {
   std::string params_file = "";
   bool model_from_memory_ = false;
   // format of input model
-  ModelFormat model_format = ModelFormat::PADDLE;
+  ModelFormat model_format = ModelFormat::ONNX;
 
   std::string encryption_key_ = "";
 
@@ -228,12 +223,6 @@ struct FASTDEPLOY_DECL RuntimeOption {
 
   // *** The belowing api are deprecated, will be removed in v1.2.0
   // *** Do not use it anymore
-  void SetPaddleMKLDNN(bool pd_mkldnn = true);
-  void EnablePaddleToTrt();
-  void DeletePaddleBackendPass(const std::string& delete_pass_name);
-  void EnablePaddleLogInfo();
-  void DisablePaddleLogInfo();
-  void SetPaddleMKLDNNCacheSize(int size);
   void SetOpenVINODevice(const std::string& name = "CPU");
   void SetOpenVINOShapeInfo(
       const std::map<std::string, std::vector<int64_t>>& shape_info) {
@@ -277,12 +266,8 @@ struct FASTDEPLOY_DECL RuntimeOption {
   void SetTrtCacheFile(const std::string& cache_file_path);
   void EnablePinnedMemory();
   void DisablePinnedMemory();
-  void EnablePaddleTrtCollectShape();
-  void DisablePaddleTrtCollectShape();
-  void DisablePaddleTrtOPs(const std::vector<std::string>& ops);
   void SetOpenVINOStreams(int num_streams);
   void SetOrtGraphOptLevel(int level = -1);
-  void UsePaddleBackend();
   void UseLiteBackend();
   void UseHorizonNPUBackend();
   void UseTVMBackend();

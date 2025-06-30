@@ -42,7 +42,7 @@ public class Recognizer {
   public Recognizer(string model_file, string params_file,
                     string label_path,
                     RuntimeOption custom_option = null,
-                    ModelFormat model_format = ModelFormat.PADDLE) {
+                    ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -255,7 +255,7 @@ public class Classifier {
    */
   public Classifier(string model_file, string params_file,
                     RuntimeOption custom_option = null,
-                    ModelFormat model_format = ModelFormat.PADDLE) {
+                    ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }
@@ -453,7 +453,7 @@ public class DBDetector {
    */
   public DBDetector(string model_file, string params_file,
                     RuntimeOption custom_option = null,
-                    ModelFormat model_format = ModelFormat.PADDLE) {
+                    ModelFormat model_format = ModelFormat.ONNX) {
     if (custom_option == null) {
       custom_option = new RuntimeOption();
     }

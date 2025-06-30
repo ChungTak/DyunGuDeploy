@@ -107,9 +107,9 @@ def build_option(args):
         table_option.use_ort_backend()
 
     elif args.backend.lower() == "paddle":
-        det_option.use_paddle_infer_backend()
-        rec_option.use_paddle_infer_backend()
-        table_option.use_paddle_infer_backend()
+        det_option.use_ort_backend()  # Note: paddle backend removed
+        rec_option.use_ort_backend()  # Note: paddle backend removed
+        table_option.use_ort_backend()  # Note: paddle backend removed
 
     elif args.backend.lower() == "openvino":
         assert args.device.lower(
