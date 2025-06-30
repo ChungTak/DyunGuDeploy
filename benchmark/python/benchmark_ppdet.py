@@ -138,8 +138,6 @@ def build_option(args):
             raise Exception(
                 "While inference with CPU, only support default/ort/ov/paddle now, {} is not supported.".
                 format(backend))
-    elif device == "kunlunxin":
-        option.use_kunlunxin()
         if backend == "lite":
             option.use_lite_backend()
         elif backend == "ort":

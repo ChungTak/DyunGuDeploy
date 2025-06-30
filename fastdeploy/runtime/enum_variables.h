@@ -30,15 +30,12 @@ namespace fastdeploy {
 enum Backend {
   UNKNOWN,  ///< Unknown inference backend
   ORT,  //< ONNX Runtime, support Paddle/ONNX format model,
-  //< CPU/ Nvidia GPU DirectML
+  //< CPU/ Nvidia GPU
   TRT,  ///< TensorRT, support Paddle/ONNX format model, Nvidia GPU only
-  POROS,    ///< Poros, support TorchScript format model, CPU / Nvidia GPU
   OPENVINO,   ///< Intel OpenVINO, support Paddle/ONNX format, CPU only
-  LITE,       ///< Paddle Lite, support Paddle format model, ARM CPU / ARM GPU
   RKNPU2,     ///< RKNPU2, support RKNN format model, Rockchip NPU only
   SOPHGOTPU,  ///< SOPHGOTPU, support SOPHGO format model, Sophgo TPU only
   HORIZONNPU,     ///< HORIZONNPU, support Horizon format model, Horizon NPU
-  TVM,  ///< TVMBackend, support TVM format model, CPU / Nvidia GPU
 };
 
 /**
@@ -57,11 +54,8 @@ enum FASTDEPLOY_DECL Device {
   GPU,
   RKNPU,
   IPU,
-  TIMVX,
-  KUNLUNXIN,
   ASCEND,
   SOPHGOTPUD,
-  DIRECTML,
   SUNRISENPU,
 };
 
@@ -70,10 +64,8 @@ enum ModelFormat {
   AUTOREC,      ///< Auto recognize the model format by model file name
   ONNX,         ///< Model with ONNX format
   RKNN,         ///< Model with RKNN format
-  TORCHSCRIPT,  ///< Model with TorchScript format
   SOPHGO,       ///< Model with SOPHGO format
   HORIZON,      ///< Model with HORIZON format
-  TVMFormat,    ///< Model with TVM format
 };
 
 /// Describle all the supported backends for specified model format
@@ -82,26 +74,19 @@ static std::map<ModelFormat, std::vector<Backend>>
   {ModelFormat::ONNX, {Backend::ORT, Backend::OPENVINO, Backend::TRT}},
   {ModelFormat::RKNN, {Backend::RKNPU2}},
   {ModelFormat::HORIZON, {Backend::HORIZONNPU}},
-  {ModelFormat::TORCHSCRIPT, {Backend::POROS}},
-  {ModelFormat::SOPHGO, {Backend::SOPHGOTPU}},
-  {ModelFormat::TVMFormat, {Backend::TVM}}
+  {ModelFormat::SOPHGO, {Backend::SOPHGOTPU}}
 };
 
 /// Describle all the supported backends for specified device
 static std::map<Device, std::vector<Backend>>
     s_default_backends_by_device = {
-  {Device::CPU, {Backend::LITE, Backend::ORT,
-                Backend::OPENVINO, Backend::POROS, Backend::TVM}},
-  {Device::GPU, {Backend::LITE, Backend::ORT,
-                Backend::TRT, Backend::POROS, Backend::TVM}},
+  {Device::CPU, {Backend::ORT, Backend::OPENVINO}},
+  {Device::GPU, {Backend::ORT, Backend::TRT}},
   {Device::RKNPU, {Backend::RKNPU2}},
   {Device::SUNRISENPU, {Backend::HORIZONNPU}},
   {Device::IPU, {}},
-  {Device::TIMVX, {Backend::LITE}},
-  {Device::KUNLUNXIN, {Backend::LITE}},
-  {Device::ASCEND, {Backend::LITE}},
-  {Device::SOPHGOTPUD, {Backend::SOPHGOTPU}},
-  {Device::DIRECTML, {Backend::ORT}}
+  {Device::ASCEND, {}},
+  {Device::SOPHGOTPUD, {Backend::SOPHGOTPU}}
 };
 
 inline bool Supported(ModelFormat format, Backend backend) {

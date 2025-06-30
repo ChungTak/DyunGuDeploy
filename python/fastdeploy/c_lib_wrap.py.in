@@ -28,11 +28,7 @@ def is_built_with_ort() -> bool:
 
 
 def is_built_with_trt() -> bool:
-    return True if "@ENABLE_TRT_BACKEND@" == "ON" else False
-
-
-def is_built_with_poros() ->bool:
-    return True if "@ENABLE_POROS_BACKEND@" == "ON" else False
+        return True if "@ENABLE_TRT_BACKEND@" == "ON" else False
 
 
 def is_built_with_openvino() ->bool:

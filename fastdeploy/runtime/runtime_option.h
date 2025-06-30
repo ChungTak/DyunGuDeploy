@@ -23,14 +23,11 @@
 #include <map>
 #include <vector>
 #include "fastdeploy/runtime/enum_variables.h"
-#include "fastdeploy/runtime/backends/lite/option.h"
 #include "fastdeploy/runtime/backends/openvino/option.h"
 #include "fastdeploy/runtime/backends/ort/option.h"
-#include "fastdeploy/runtime/backends/poros/option.h"
 #include "fastdeploy/runtime/backends/rknpu2/option.h"
 #include "fastdeploy/runtime/backends/sophgo/option.h"
 #include "fastdeploy/runtime/backends/tensorrt/option.h"
-#include "fastdeploy/runtime/backends/tvm/option.h"
 #include "fastdeploy/benchmark/option.h"
 
 namespace fastdeploy {
@@ -75,46 +72,9 @@ struct FASTDEPLOY_DECL RuntimeOption {
                      fastdeploy::rknpu2::CoreMask::RKNN_NPU_CORE_AUTO);
   // Use Horizon NPU to inference
   void UseHorizon();
-  /// Use TimVX e.g RV1126/A311D to inference
-  void UseTimVX();
-  /// Use Huawei Ascend to inference
-  void UseAscend();
-
-  /// Use onnxruntime DirectML to inference
-  void UseDirectML(int adapter_id = 0);
 
   /// Use Sophgo to inference
   void UseSophgo();
-  /// \brief Turn on KunlunXin XPU.
-  ///
-  /// \param kunlunxin_id the KunlunXin XPU card to use (default is 0).
-  /// \param l3_workspace_size The size of the video memory allocated by the l3
-  ///         cache, the maximum is 16M.
-  /// \param locked Whether the allocated L3 cache can be locked. If false,
-  ///       it means that the L3 cache is not locked, and the allocated L3
-  ///       cache can be shared by multiple models, and multiple models
-  ///       sharing the L3 cache will be executed sequentially on the card.
-  /// \param autotune Whether to autotune the conv operator in the model. If
-  ///       true, when the conv operator of a certain dimension is executed
-  ///       for the first time, it will automatically search for a better
-  ///       algorithm to improve the performance of subsequent conv operators
-  ///       of the same dimension.
-  /// \param autotune_file Specify the path of the autotune file. If
-  ///       autotune_file is specified, the algorithm specified in the
-  ///       file will be used and autotune will not be performed again.
-  /// \param precision Calculation accuracy of multi_encoder
-  /// \param adaptive_seqlen Is the input of multi_encoder variable length
-  /// \param enable_multi_stream Whether to enable the multi stream of
-  ///        KunlunXin XPU.
-  /// \param gm_default_size The default size of global memory of KunlunXin XPU.
-  ///
-  void UseKunlunXin(int kunlunxin_id = 0, int l3_workspace_size = 0xfffc00,
-                    bool locked = false, bool autotune = true,
-                    const std::string& autotune_file = "",
-                    const std::string& precision = "int16",
-                    bool adaptive_seqlen = false,
-                    bool enable_multi_stream = false,
-                    int64_t gm_default_size = 0);
 
   void SetExternalStream(void* external_stream);
 
@@ -128,12 +88,8 @@ struct FASTDEPLOY_DECL RuntimeOption {
   void UseSophgoBackend();
   /// Set TensorRT as inference backend, only support GPU
   void UseTrtBackend();
-  /// Set Poros backend as inference backend, support CPU/GPU
-  void UsePorosBackend();
   /// Set OpenVINO as inference backend, only support CPU
   void UseOpenVINOBackend();
-  /// Set Paddle Lite as inference backend, only support arm cpu
-  void UsePaddleLiteBackend() { return UseLiteBackend(); }
   /** \Use Graphcore IPU to inference.
    *
    * \param[in] device_num the number of IPUs.
@@ -148,16 +104,10 @@ struct FASTDEPLOY_DECL RuntimeOption {
   OrtBackendOption ort_option;
   /// Option to configure TensorRT backend
   TrtBackendOption trt_option;
-  /// Option to configure Poros backend
-  PorosBackendOption poros_option;
   /// Option to configure OpenVINO backend
   OpenVINOBackendOption openvino_option;
-  /// Option to configure Paddle Lite backend
-  LiteBackendOption paddle_lite_option;
   /// Option to configure RKNPU2 backend
   RKNPU2BackendOption rknpu2_option;
-  /// Option to configure TVM backend
-  TVMBackendOption tvm_option;
 
   //  \brief Set the profile mode as 'true'.
   //
@@ -231,24 +181,6 @@ struct FASTDEPLOY_DECL RuntimeOption {
   void SetOpenVINOCpuOperators(const std::vector<std::string>& operators) {
     openvino_option.SetCpuOperators(operators);
   }
-  void SetLiteOptimizedModelDir(const std::string& optimized_model_dir);
-  void SetLiteSubgraphPartitionPath(
-      const std::string& nnadapter_subgraph_partition_config_path);
-  void SetLiteSubgraphPartitionConfigBuffer(
-      const std::string& nnadapter_subgraph_partition_config_buffer);
-  void
-  SetLiteContextProperties(const std::string& nnadapter_context_properties);
-  void SetLiteModelCacheDir(const std::string& nnadapter_model_cache_dir);
-  void SetLiteDynamicShapeInfo(
-      const std::map<std::string, std::vector<std::vector<int64_t>>>&
-          nnadapter_dynamic_shape_info);
-  void SetLiteMixedPrecisionQuantizationConfigPath(
-      const std::string& nnadapter_mixed_precision_quantization_config_path);
-  void EnableLiteFP16();
-  void DisableLiteFP16();
-  void EnableLiteInt8();
-  void DisableLiteInt8();
-  void SetLitePowerMode(LitePowerMode mode);
   void SetTrtInputShape(
       const std::string& input_name, const std::vector<int32_t>& min_shape,
       const std::vector<int32_t>& opt_shape = std::vector<int32_t>(),
@@ -268,9 +200,7 @@ struct FASTDEPLOY_DECL RuntimeOption {
   void DisablePinnedMemory();
   void SetOpenVINOStreams(int num_streams);
   void SetOrtGraphOptLevel(int level = -1);
-  void UseLiteBackend();
   void UseHorizonNPUBackend();
-  void UseTVMBackend();
 };
 
 }  // namespace fastdeploy

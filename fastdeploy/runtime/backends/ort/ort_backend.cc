@@ -64,50 +64,7 @@ bool OrtBackend::BuildOption(const OrtBackendOption& option) {
 #endif
   }
 
-#ifdef WITH_DIRECTML
-  // If use DirectML
-  if (option.device == Device::DIRECTML) {
-    auto all_providers = Ort::GetAvailableProviders();
-    bool support_dml = false;
-    std::string providers_msg = "";
-    for (size_t i = 0; i < all_providers.size(); ++i) {
-      providers_msg = providers_msg + all_providers[i] + ", ";
-      if (all_providers[i] == "DmlExecutionProvider") {
-        support_dml = true;
-      }
-    }
 
-    if (!support_dml) {
-      FDWARNING << "Compiled fastdeploy with onnxruntime doesn't "
-                   "support DirectML, the available providers are "
-                << providers_msg << "will fallback to CPUExecutionProvider."
-                << "Please check if DirectML is installed successfully."
-                << std::endl;
-      option_.device = Device::CPU;
-    } else {
-      // Must set as below when use dml.
-      session_options_.DisableMemPattern();
-      session_options_.SetExecutionMode(ExecutionMode(0));
-
-      // DML session_option
-      OrtApi const& ortApi = Ort::GetApi();
-      const OrtDmlApi* ortDmlApi;
-      ortApi.GetExecutionProviderApi(
-          "DML", ORT_API_VERSION, reinterpret_cast<const void**>(&ortDmlApi));
-      OrtStatus* onnx_dml_status =
-          ortDmlApi->SessionOptionsAppendExecutionProvider_DML(session_options_,
-                                                               option_.device_id);
-      if (onnx_dml_status != nullptr) {
-        FDERROR
-            << "DirectML is not support in your machine, the program will exit."
-            << std::endl;
-        ortApi.ReleaseStatus(onnx_dml_status);
-        return false;
-      }
-    }
-    return true;
-  }
-#endif
 
   // CUDA
   if (option.device == Device::GPU) {
@@ -141,8 +98,7 @@ bool OrtBackend::BuildOption(const OrtBackendOption& option) {
 }
 
 bool OrtBackend::Init(const RuntimeOption& option) {
-  if (option.device != Device::CPU && option.device != Device::GPU &&
-      option.device != Device::DIRECTML) {
+  if (option.device != Device::CPU && option.device != Device::GPU) {
     FDERROR
         << "Backend::ORT only supports Device::CPU/Device::GPU, but now its "
         << option.device << "." << std::endl;

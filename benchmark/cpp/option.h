@@ -128,8 +128,9 @@ static bool CreateRuntimeOption(fastdeploy::RuntimeOption* option,
       return false;
     }
   } else if (config_info["device"] == "xpu") {
-    option->UseKunlunXin(std::stoi(config_info["device_id"]),
-                         std::stoi(config_info["xpu_l3_cache"]));
+    // KunlunXin support has been removed, fallback to CPU
+    FDWARNING << "KunlunXin (XPU) support has been removed from FastDeploy, using CPU instead." << std::endl;
+    option->UseCpuBackend();
     if (config_info["backend"] == "ort") {
       option->UseOrtBackend();
     } else if (config_info["backend"] == "paddle") {

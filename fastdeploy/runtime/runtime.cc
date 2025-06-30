@@ -25,16 +25,8 @@
 #include "fastdeploy/runtime/backends/tensorrt/trt_backend.h"
 #endif
 
-#ifdef ENABLE_POROS_BACKEND
-#include "fastdeploy/runtime/backends/poros/poros_backend.h"
-#endif
-
 #ifdef ENABLE_OPENVINO_BACKEND
 #include "fastdeploy/runtime/backends/openvino/ov_backend.h"
-#endif
-
-#ifdef ENABLE_LITE_BACKEND
-#include "fastdeploy/runtime/backends/lite/lite_backend.h"
 #endif
 
 #ifdef ENABLE_RKNPU2_BACKEND
@@ -47,10 +39,6 @@
 
 #ifdef ENABLE_HORIZON_BACKEND
 #include "fastdeploy/runtime/backends/horizon/horizon_backend.h"
-#endif
-
-#ifdef ENABLE_TVM_BACKEND
-#include "fastdeploy/runtime/backends/tvm/tvm_backend.h"
 #endif
 
 namespace fastdeploy {
@@ -145,22 +133,16 @@ bool Runtime::Init(const RuntimeOption& _option) {
 
   if (option.backend == Backend::ORT) {
     CreateOrtBackend();
-  } else if (option.backend == Backend::TRT) {
+    } else if (option.backend == Backend::TRT) {
     CreateTrtBackend();
   } else if (option.backend == Backend::OPENVINO) {
     CreateOpenVINOBackend();
-  } else if (option.backend == Backend::LITE) {
-    CreateLiteBackend();
   } else if (option.backend == Backend::RKNPU2) {
     CreateRKNPU2Backend();
   } else if (option.backend == Backend::SOPHGOTPU) {
     CreateSophgoNPUBackend();
-  } else if (option.backend == Backend::POROS) {
-    CreatePorosBackend();
   } else if (option.backend == Backend::HORIZONNPU) {
     CreateHorizonBackend();
-  } else if (option.backend == Backend::TVM) {
-    CreateTVMBackend();
   } else {
     std::string msg = Str(GetAvailableBackends());
     FDERROR << "The compiled FastDeploy only supports " << msg << ", "
@@ -199,13 +181,8 @@ bool Runtime::Infer(std::vector<FDTensor>& input_tensors,
 
 bool Runtime::Infer() {
   bool result = false;
-  if (option.device == Device::KUNLUNXIN) {
-    // FDTensor SetExternalData is not support for Device::KUNLUNXIN
-    // now, so, we need to set copy_to_fd as 'true'.
-    result = backend_->Infer(input_tensors_, &output_tensors_, true);
-  } else {
-    result = backend_->Infer(input_tensors_, &output_tensors_, false);
-  }
+  // All devices now use the same inference path
+  result = backend_->Infer(input_tensors_, &output_tensors_, false);
 
   for (auto& tensor : output_tensors_) {
     tensor.device_id = option.device_id;
@@ -280,19 +257,6 @@ void Runtime::CreateOpenVINOBackend() {
          << "." << std::endl;
 }
 
-void Runtime::CreateTVMBackend() {
-#ifdef ENABLE_TVM_BACKEND
-  backend_ = utils::make_unique<TVMBackend>();
-  FDASSERT(backend_->Init(option), "Failed to initialize TVM backend.");
-#else
-  FDASSERT(false,
-           "TVMBackend is not available, please compiled with "
-           "ENABLE_TVM_BACKEND=ON.");
-#endif
-  FDINFO << "Runtime initialized with Backend::TVM in " << option.device << "."
-         << std::endl;
-}
-
 void Runtime::CreateOrtBackend() {
 #ifdef ENABLE_ORT_BACKEND
   backend_ = utils::make_unique<OrtBackend>();
@@ -320,20 +284,6 @@ void Runtime::CreateTrtBackend() {
          << std::endl;
 }
 
-void Runtime::CreateLiteBackend() {
-#ifdef ENABLE_LITE_BACKEND
-  backend_ = utils::make_unique<LiteBackend>();
-
-  FDASSERT(backend_->Init(option),
-           "Load model from nb file failed while initializing LiteBackend.");
-#else
-  FDASSERT(false,
-           "LiteBackend is not available, please compiled with "
-           "ENABLE_LITE_BACKEND=ON.");
-#endif
-  FDINFO << "Runtime initialized with Backend::PDLITE in " << option.device
-         << "." << std::endl;
-}
 
 void Runtime::CreateRKNPU2Backend() {
 #ifdef ENABLE_RKNPU2_BACKEND
@@ -390,41 +340,6 @@ Runtime* Runtime::Clone(void* stream, int device_id) {
   runtime->option = option;
   runtime->backend_ = backend_->Clone(option, stream, device_id);
   return runtime;
-}
-
-void Runtime::CreatePorosBackend() {
-#ifdef ENABLE_POROS_BACKEND
-  backend_ = utils::make_unique<PorosBackend>();
-  FDASSERT(backend_->Init(option), "Failed to initialize Poros backend.");
-#else
-  FDASSERT(false,
-           "PorosBackend is not available, please compiled with "
-           "ENABLE_POROS_BACKEND=ON.");
-#endif
-  FDINFO << "Runtime initialized with Backend::POROS in " << option.device
-         << "." << std::endl;
-}
-
-// only for poros backend
-bool Runtime::Compile(std::vector<std::vector<FDTensor>>& prewarm_tensors) {
-#ifdef ENABLE_POROS_BACKEND
-  option.poros_option.device = option.device;
-  option.poros_option.device_id = option.device_id;
-  option.poros_option.enable_fp16 = option.trt_option.enable_fp16;
-  option.poros_option.max_batch_size = option.trt_option.max_batch_size;
-  option.poros_option.max_workspace_size = option.trt_option.max_workspace_size;
-
-  auto casted_backend = dynamic_cast<PorosBackend*>(backend_.get());
-  FDASSERT(
-      casted_backend->Compile(option.model_file, prewarm_tensors,
-                              option.poros_option),
-      "Load model from Torchscript failed while initliazing PorosBackend.");
-#else
-  FDASSERT(false,
-           "PorosBackend is not available, please compiled with "
-           "ENABLE_POROS_BACKEND=ON.");
-#endif
-  return true;
 }
 
 }  // namespace fastdeploy

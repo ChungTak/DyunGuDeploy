@@ -87,7 +87,7 @@ typedef union {
   Packet2l p2l_##NAME = pset1<Packet2l>(X)
 
 // These constants are endian-agnostic
-static _EIGEN_DECLARE_CONST_FAST_Packet4i(ZERO, 0);  //{ 0, 0, 0, 0,}
+static _EIGEN_DECLARE_CONST_FAST_Packet4i(ZERO, 0);  //{ 0, 0, 0, 0}
 static _EIGEN_DECLARE_CONST_FAST_Packet4i(ONE, 1);   //{ 1, 1, 1, 1}
 
 static _EIGEN_DECLARE_CONST_FAST_Packet2d(ZERO, 0);

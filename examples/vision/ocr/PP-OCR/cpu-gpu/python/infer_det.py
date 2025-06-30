@@ -29,7 +29,7 @@ def parse_arguments():
         "--device",
         type=str,
         default='cpu',
-        help="Type of inference device, support 'cpu', 'kunlunxin' or 'gpu'.")
+        help="Type of inference device, support 'cpu', 'cpu' or 'gpu'.")
     parser.add_argument(
         "--device_id",
         type=int,

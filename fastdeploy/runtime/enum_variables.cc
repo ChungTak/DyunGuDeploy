@@ -27,14 +27,8 @@ std::ostream& operator<<(std::ostream& out, const Backend& backend) {
     out << "Backend::RKNPU2";
   } else if (backend == Backend::SOPHGOTPU) {
     out << "Backend::SOPHGOTPU";
-  } else if (backend == Backend::POROS) {
-    out << "Backend::POROS";
-  } else if (backend == Backend::LITE) {
-    out << "Backend::PDLITE";
   } else if (backend == Backend::HORIZONNPU) {
     out << "Backend::HORIZONNPU";
-  } else if (backend == Backend::TVM) {
-    out << "Backend::TVM";
   } else {
     out << "UNKNOWN-Backend";
   }
@@ -58,17 +52,8 @@ std::ostream& operator<<(std::ostream& out, const Device& d) {
     case Device::SOPHGOTPUD:
       out << "Device::SOPHGOTPUD";
       break;
-    case Device::TIMVX:
-      out << "Device::TIMVX";
-      break;
-    case Device::KUNLUNXIN:
-      out << "Device::KUNLUNXIN";
-      break;
     case Device::ASCEND:
       out << "Device::ASCEND";
-      break;
-    case Device::DIRECTML:
-      out << "Device::DIRECTML";
       break;
     default:
       out << "Device::UNKOWN";
@@ -83,12 +68,8 @@ std::ostream& operator<<(std::ostream& out, const ModelFormat& format) {
     out << "ModelFormat::RKNN";
   } else if (format == ModelFormat::SOPHGO) {
     out << "ModelFormat::SOPHGO";
-  } else if (format == ModelFormat::TORCHSCRIPT) {
-    out << "ModelFormat::TORCHSCRIPT";
   } else if (format == ModelFormat::HORIZON) {
     out << "ModelFormat::HORIZON";
-  } else if (format == ModelFormat::TVMFormat) {
-    out << "ModelFormat::TVMFormat";
   } else {
     out << "UNKNOWN-ModelFormat";
   }
@@ -103,14 +84,8 @@ std::vector<Backend> GetAvailableBackends() {
 #ifdef ENABLE_TRT_BACKEND
   backends.push_back(Backend::TRT);
 #endif
-#ifdef ENABLE_POROS_BACKEND
-  backends.push_back(Backend::POROS);
-#endif
 #ifdef ENABLE_OPENVINO_BACKEND
   backends.push_back(Backend::OPENVINO);
-#endif
-#ifdef ENABLE_LITE_BACKEND
-  backends.push_back(Backend::LITE);
 #endif
 #ifdef ENABLE_RKNPU2_BACKEND
   backends.push_back(Backend::RKNPU2);
@@ -120,9 +95,6 @@ std::vector<Backend> GetAvailableBackends() {
 #endif
 #ifdef ENABLE_SOPHGO_BACKEND
   backends.push_back(Backend::SOPHGOTPU);
-#endif
-#ifdef ENABLE_TVM_BACKEND
-  backends.push_back(Backend::TVM);
 #endif
   return backends;
 }

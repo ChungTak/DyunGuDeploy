@@ -497,7 +497,7 @@ TRITONSERVER_Error* ModelState::LoadModel(
     }
 #else
     if ((runtime_options_->device != fastdeploy::Device::IPU) &&
-        (runtime_options_->device != fastdeploy::Device::KUNLUNXIN)) {
+        (runtime_options_->device != fastdeploy::Device::CPU)) {
       // If Device is set to IPU/XPU, just skip CPU setting.
       runtime_options_->UseCpu();
     }

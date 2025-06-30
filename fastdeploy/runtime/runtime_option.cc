@@ -46,13 +46,9 @@ void RuntimeOption::SetEncryptionKey(const std::string& encryption_key) {
 }
 
 void RuntimeOption::UseGpu(int gpu_id) {
-#if defined(WITH_GPU) || defined(WITH_OPENCL)
+#ifdef WITH_GPU
   device = Device::GPU;
   device_id = gpu_id;
-
-#if defined(WITH_OPENCL) && defined(ENABLE_LITE_BACKEND)
-  paddle_lite_option.device = device;
-#endif
 
 #else
   FDWARNING << "The FastDeploy didn't compile with GPU, will force to use CPU."
@@ -72,60 +68,11 @@ void RuntimeOption::UseRKNPU2(fastdeploy::rknpu2::CpuName rknpu2_name,
 
 void RuntimeOption::UseHorizon() { device = Device::SUNRISENPU; }
 
-void RuntimeOption::UseTimVX() {
-  device = Device::TIMVX;
-  paddle_lite_option.device = device;
-}
-
-void RuntimeOption::UseKunlunXin(int kunlunxin_id, 
-                                 int l3_workspace_size,
-                                 bool locked, bool autotune,
-                                 const std::string& autotune_file,
-                                 const std::string& precision,
-                                 bool adaptive_seqlen, bool enable_multi_stream,
-                                 int64_t gm_default_size) {
-#ifdef WITH_KUNLUNXIN                                
-  device = Device::KUNLUNXIN;
-  
-#ifdef ENABLE_LITE_BACKEND  
-  paddle_lite_option.device = device;
-  paddle_lite_option.device_id = kunlunxin_id;
-  paddle_lite_option.kunlunxin_l3_workspace_size = l3_workspace_size;
-  paddle_lite_option.kunlunxin_locked = locked;
-  paddle_lite_option.kunlunxin_autotune = autotune;
-  paddle_lite_option.kunlunxin_autotune_file = autotune_file;
-  paddle_lite_option.kunlunxin_precision = precision;
-  paddle_lite_option.kunlunxin_adaptive_seqlen = adaptive_seqlen;
-  paddle_lite_option.kunlunxin_enable_multi_stream = enable_multi_stream;
-  paddle_lite_option.kunlunxin_gm_default_size = gm_default_size;
-#endif
-
-#else
-  FDWARNING << "The FastDeploy didn't compile with KUNLUNXIN, will force to use CPU."
-            << std::endl;
-  device = Device::CPU;
-#endif
-}
-
 void RuntimeOption::UseIpu(int device_num, int micro_batch_size,
                            bool enable_pipelining, int batches_per_step) {
-#ifdef WITH_IPU
-  device = Device::IPU;
-#else
-  FDWARNING << "The FastDeploy didn't compile with IPU, will force to use CPU."
+  FDWARNING << "IPU device support has been removed from FastDeploy, will force to use CPU."
             << std::endl;
   device = Device::CPU;
-#endif
-}
-
-void RuntimeOption::UseAscend() {
-  device = Device::ASCEND;
-  paddle_lite_option.device = device;
-}
-
-void RuntimeOption::UseDirectML(int adapter_id) {
-  device = Device::DIRECTML;
-  device_id = adapter_id;
 }
 
 void RuntimeOption::UseSophgo() {
@@ -140,7 +87,6 @@ void RuntimeOption::SetExternalStream(void* external_stream) {
 void RuntimeOption::SetCpuThreadNum(int thread_num) {
   FDASSERT(thread_num > 0, "The thread_num must be greater than 0.");
   cpu_thread_num = thread_num;
-  paddle_lite_option.cpu_threads = thread_num;
   ort_option.intra_op_num_threads = thread_num;
   openvino_option.cpu_thread_num = thread_num;
 }
@@ -175,15 +121,6 @@ void RuntimeOption::UseSophgoBackend() {
 #endif
 }
 
-// use poros backend
-void RuntimeOption::UsePorosBackend() {
-#ifdef ENABLE_POROS_BACKEND
-  backend = Backend::POROS;
-#else
-  FDASSERT(false, "The FastDeploy didn't compile with PorosBackend.");
-#endif
-}
-
 void RuntimeOption::UseTrtBackend() {
 #ifdef ENABLE_TRT_BACKEND
   backend = Backend::TRT;
@@ -197,14 +134,6 @@ void RuntimeOption::UseOpenVINOBackend() {
   backend = Backend::OPENVINO;
 #else
   FDASSERT(false, "The FastDeploy didn't compile with OpenVINO.");
-#endif
-}
-
-void RuntimeOption::UseLiteBackend() {
-#ifdef ENABLE_LITE_BACKEND
-  backend = Backend::LITE;
-#else
-  FDASSERT(false, "The FastDeploy didn't compile with Paddle Lite.");
 #endif
 }
 
@@ -222,124 +151,6 @@ void RuntimeOption::SetOpenVINODevice(const std::string& name) {
                "std::string&)` instead."
             << std::endl;
   openvino_option.SetDevice(name);
-}
-
-void RuntimeOption::EnableLiteFP16() {
-  FDWARNING << "`RuntimeOption::EnableLiteFP16` will be removed in v1.2.0, "
-               "please modify its member variables directly, e.g "
-               "`runtime_option.paddle_lite_option.enable_fp16 = true`"
-            << std::endl;
-  paddle_lite_option.enable_fp16 = true;
-}
-
-void RuntimeOption::DisableLiteFP16() {
-  FDWARNING << "`RuntimeOption::EnableLiteFP16` will be removed in v1.2.0, "
-               "please modify its member variables directly, e.g "
-               "`runtime_option.paddle_lite_option.enable_fp16 = false`"
-            << std::endl;
-  paddle_lite_option.enable_fp16 = false;
-}
-
-void RuntimeOption::EnableLiteInt8() {
-  FDWARNING << "RuntimeOption::EnableLiteInt8 is a useless api, this calling "
-               "will not bring any effects, and will be removed in v1.2.0. if "
-               "you load a quantized model, it will automatically run with "
-               "int8 mode; otherwise it will run with float mode."
-            << std::endl;
-}
-
-void RuntimeOption::DisableLiteInt8() {
-  FDWARNING << "RuntimeOption::DisableLiteInt8 is a useless api, this calling "
-               "will not bring any effects, and will be removed in v1.2.0. if "
-               "you load a quantized model, it will automatically run with "
-               "int8 mode; otherwise it will run with float mode."
-            << std::endl;
-}
-
-void RuntimeOption::SetLitePowerMode(LitePowerMode mode) {
-  FDWARNING << "`RuntimeOption::SetLitePowerMode` will be removed in v1.2.0, "
-               "please modify its member variable directly, e.g "
-               "`runtime_option.paddle_lite_option.power_mode = 3;`"
-            << std::endl;
-  paddle_lite_option.power_mode = mode;
-}
-
-void RuntimeOption::SetLiteOptimizedModelDir(
-    const std::string& optimized_model_dir) {
-  FDWARNING
-      << "`RuntimeOption::SetLiteOptimizedModelDir` will be removed in v1.2.0, "
-         "please modify its member variable directly, e.g "
-         "`runtime_option.paddle_lite_option.optimized_model_dir = \"...\"`"
-      << std::endl;
-  paddle_lite_option.optimized_model_dir = optimized_model_dir;
-}
-
-void RuntimeOption::SetLiteSubgraphPartitionPath(
-    const std::string& nnadapter_subgraph_partition_config_path) {
-  FDWARNING << "`RuntimeOption::SetLiteSubgraphPartitionPath` will be removed "
-               "in v1.2.0, please modify its member variable directly, e.g "
-               "`runtime_option.paddle_lite_option.nnadapter_subgraph_"
-               "partition_config_path = \"...\";` "
-            << std::endl;
-  paddle_lite_option.nnadapter_subgraph_partition_config_path =
-      nnadapter_subgraph_partition_config_path;
-}
-
-void RuntimeOption::SetLiteSubgraphPartitionConfigBuffer(
-    const std::string& nnadapter_subgraph_partition_config_buffer) {
-  FDWARNING
-      << "`RuntimeOption::SetLiteSubgraphPartitionConfigBuffer` will be "
-         "removed in v1.2.0, please modify its member variable directly, e.g "
-         "`runtime_option.paddle_lite_option.nnadapter_subgraph_partition_"
-         "config_buffer = ...`"
-      << std::endl;
-  paddle_lite_option.nnadapter_subgraph_partition_config_buffer =
-      nnadapter_subgraph_partition_config_buffer;
-}
-
-void RuntimeOption::SetLiteContextProperties(
-    const std::string& nnadapter_context_properties) {
-  FDWARNING << "`RuntimeOption::SetLiteContextProperties` will be removed in "
-               "v1.2.0, please modify its member variable directly, e.g "
-               "`runtime_option.paddle_lite_option.nnadapter_context_"
-               "properties = ...`"
-            << std::endl;
-  paddle_lite_option.nnadapter_context_properties =
-      nnadapter_context_properties;
-}
-
-void RuntimeOption::SetLiteModelCacheDir(
-    const std::string& nnadapter_model_cache_dir) {
-  FDWARNING
-      << "`RuntimeOption::SetLiteModelCacheDir` will be removed in v1.2.0, "
-         "please modify its member variable directly, e.g "
-         "`runtime_option.paddle_lite_option.nnadapter_model_cache_dir = ...`"
-      << std::endl;
-  paddle_lite_option.nnadapter_model_cache_dir = nnadapter_model_cache_dir;
-}
-
-void RuntimeOption::SetLiteDynamicShapeInfo(
-    const std::map<std::string, std::vector<std::vector<int64_t>>>&
-        nnadapter_dynamic_shape_info) {
-  FDWARNING << "`RuntimeOption::SetLiteDynamicShapeInfo` will be removed in "
-               "v1.2.0, please modify its member variable directly, e.g "
-               "`runtime_option.paddle_lite_option.paddle_lite_option."
-               "nnadapter_dynamic_shape_info = ...`"
-            << std::endl;
-  paddle_lite_option.nnadapter_dynamic_shape_info =
-      nnadapter_dynamic_shape_info;
-}
-
-void RuntimeOption::SetLiteMixedPrecisionQuantizationConfigPath(
-    const std::string& nnadapter_mixed_precision_quantization_config_path) {
-  FDWARNING
-      << "`RuntimeOption::SetLiteMixedPrecisionQuantizationConfigPath` will be "
-         "removed in v1.2.0, please modify its member variable directly, e.g "
-         "`runtime_option.paddle_lite_option.paddle_lite_option.nnadapter_"
-         "mixed_precision_quantization_config_path = ...`"
-      << std::endl;
-  paddle_lite_option.nnadapter_mixed_precision_quantization_config_path =
-      nnadapter_mixed_precision_quantization_config_path;
 }
 
 void RuntimeOption::SetTrtInputShape(const std::string& input_name,
@@ -412,14 +223,6 @@ void RuntimeOption::SetOpenVINOStreams(int num_streams) {
                "`runtime_option.openvino_option.num_streams = "
             << num_streams << "`." << std::endl;
   openvino_option.num_streams = num_streams;
-}
-
-void RuntimeOption::UseTVMBackend() {
-#ifdef ENABLE_TVM_BACKEND
-  backend = Backend::TVM;
-#else
-  FDASSERT(false, "The FastDeploy didn't compile with TVMBackend.");
-#endif
 }
 
 }  // namespace fastdeploy

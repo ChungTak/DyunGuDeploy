@@ -627,7 +627,7 @@ const char *ex7_14 =
     "]";
 
 const char *ex7_15 =
-    "- { one : two , three: four , }\n"
+    "- { one : two , three: four }\n"
     "- {five: six,seven : eight}";
 
 const char *ex7_16 =

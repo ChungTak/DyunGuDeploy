@@ -9,12 +9,7 @@ set(NEED_ABI0 @NEED_ABI0@)
 
 # Hardware and Language API
 set(WITH_GPU @WITH_GPU@)
-set(WITH_IPU @WITH_IPU@)
-set(WITH_OPENCL @WITH_OPENCL@)
 set(WITH_ASCEND @WITH_ASCEND@)
-set(WITH_DIRECTML @WITH_DIRECTML@)
-set(WITH_TIMVX @WITH_TIMVX@)
-set(WITH_KUNLUNXIN @WITH_KUNLUNXIN@)
 set(WITH_CAPI @WITH_CAPI@)
 set(WITH_CSHARPAPI @WITH_CSHARPAPI@)
 set(WITH_TESTING @WITH_TESTING@)
@@ -24,12 +19,9 @@ set(RKNN2_TARGET_SOC "@RKNN2_TARGET_SOC@")
 # Inference backend and FastDeploy Moudle
 set(ENABLE_ORT_BACKEND @ENABLE_ORT_BACKEND@)
 set(ENABLE_RKNPU2_BACKEND @ENABLE_RKNPU2_BACKEND@)
-set(ENABLE_TVM_BACKEND @ENABLE_TVM_BACKEND@)
 set(ENABLE_HORIZON_BACKEND @ENABLE_HORIZON_BACKEND@)
 set(ENABLE_SOPHGO_BACKEND @ENABLE_SOPHGO_BACKEND@)
-set(ENABLE_LITE_BACKEND @ENABLE_LITE_BACKEND@)
 set(ENABLE_OPENVINO_BACKEND @ENABLE_OPENVINO_BACKEND@)
-set(ENABLE_POROS_BACKEND @ENABLE_POROS_BACKEND@)
 set(ENABLE_TRT_BACKEND @ENABLE_TRT_BACKEND@)
 
 set(ENABLE_VISION @ENABLE_VISION@)
@@ -40,7 +32,6 @@ set(ENABLE_ENCRYPTION @ENABLE_ENCRYPTION@)
 set(ENABLE_BENCHMARK @ENABLE_BENCHMARK@)
 
 # Version infos and custom settings for third libs
-set(POROS_VERSION @POROS_VERSION@)
 set(OPENVINO_VERSION @OPENVINO_VERSION@)
 set(OPENCV_FILENAME @OPENCV_FILENAME@)
 set(OPENVINO_FILENAME @OPENVINO_FILENAME@)
@@ -126,15 +117,6 @@ if(ENABLE_ORT_BACKEND)
   list(APPEND FASTDEPLOY_LIBS ${ORT_LIB})
 endif()
 
-if(ENABLE_TVM_BACKEND)
-    if(APPLE)
-        set(TVM_RUNTIME_LIB ${CMAKE_CURRENT_LIST_DIR}/third_libs/install/tvm/lib/libtvm_runtime.dylib)
-    else()
-        set(TVM_RUNTIME_LIB ${CMAKE_CURRENT_LIST_DIR}/third_libs/install/tvm/lib/libtvm_runtime.so)
-    endif()
-    list(APPEND FASTDEPLOY_LIBS ${TVM_RUNTIME_LIB})
-endif()
-
 if(ENABLE_OPENVINO_BACKEND)
   if (OPENVINO_DIRECTORY)
     set(OPENVINO_DIR ${OPENVINO_DIRECTORY})
@@ -173,32 +155,9 @@ if(ENABLE_HORIZON_BACKEND)
   list(APPEND FASTDEPLOY_LIBS ${BPU_libs})
 
 endif()
-if(ENABLE_LITE_BACKEND)
-  set(LITE_DIR ${CMAKE_CURRENT_LIST_DIR}/third_libs/install/${PADDLELITE_FILENAME})
-  if(ANDROID)
-    if(WITH_ANDROID_LITE_STATIC)
-      if(WITH_ANDROID_STATIC_LIB)
-        list(APPEND FASTDEPLOY_INCS ${LITE_DIR}/include)
-      endif()
-    else()
-      add_library(paddle_full_api_shared STATIC IMPORTED GLOBAL)
-      set_property(TARGET paddle_full_api_shared PROPERTY IMPORTED_LOCATION ${LITE_DIR}/lib/${ANDROID_ABI}/libpaddle_full_api_shared.so)
-      list(APPEND FASTDEPLOY_LIBS paddle_full_api_shared)
-    endif()
-  else()
-    # Linux/Mac/Win/...
-    find_library(LITE_LIB paddle_full_api_shared ${LITE_DIR}/lib NO_DEFAULT_PATH)
-    list(APPEND FASTDEPLOY_LIBS ${LITE_LIB})
-  endif()
-endif()
 
-if(ENABLE_POROS_BACKEND)
-  find_library(POROS_LIB poros ${CMAKE_CURRENT_LIST_DIR}/third_libs/install/poros/lib NO_DEFAULT_PATH)
-  find_library(TORCH_LIB torch ${CMAKE_CURRENT_LIST_DIR}/third_libs/install/torch/lib NO_DEFAULT_PATH)
-  set(TORCH_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/third_libs/install/torch/include")
-  list(APPEND FASTDEPLOY_LIBS ${POROS_LIB} ${TORCH_LIB})
-  list(APPEND FASTDEPLOY_INCS ${CMAKE_CURRENT_LIST_DIR}/third_libs/install/poros/include ${TORCH_INCLUDE})
-endif()
+
+
 
 if(WITH_GPU)
   if(NOT CUDA_DIRECTORY)
@@ -352,10 +311,6 @@ if (ENABLE_TEXT)
 endif()
 
 
-
-if(WITH_KUNLUNXIN)
-  list(APPEND FASTDEPLOY_LIBS -lpthread -lrt -ldl)
-endif()
 
 # log lib for Android
 if(ANDROID)

@@ -46,7 +46,7 @@ docker run -i --rm --name build_fd_xpu_auth_108_dev \
             mv ${tmp_dir%.*} paddle_inference
             PADDLEINFERENCE_DIRECTORY=${PWD}/paddle_inference
             rm -rf build; mkdir build; cd build;
-            cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install -DWITH_KUNLUNXIN=ON -DENABLE_PADDLE_BACKEND=ON -DPADDLEINFERENCE_DIRECTORY=${PADDLEINFERENCE_DIRECTORY} -DENABLE_BENCHMARK=ON -DLIBRARY_NAME=fastdeploy_runtime;
+                        cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install -DENABLE_PADDLE_BACKEND=ON -DPADDLEINFERENCE_DIRECTORY=${PADDLEINFERENCE_DIRECTORY} -DENABLE_BENCHMARK=ON -DLIBRARY_NAME=fastdeploy_runtime;
             make -j`nproc`;
             make install;
             # fix the link error of libbkcl.so

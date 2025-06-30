@@ -56,14 +56,11 @@ setup_configs = dict()
 setup_configs["LIBRARY_NAME"] = PACKAGE_NAME
 setup_configs["PY_LIBRARY_NAME"] = PACKAGE_NAME + "_main"
 # Backend options
-setup_configs["ENABLE_TVM_BACKEND"] = os.getenv("ENABLE_TVM_BACKEND", "OFF")
 setup_configs["ENABLE_RKNPU2_BACKEND"] = os.getenv("ENABLE_RKNPU2_BACKEND", "OFF")
 setup_configs["ENABLE_SOPHGO_BACKEND"] = os.getenv("ENABLE_SOPHGO_BACKEND", "OFF")
 setup_configs["ENABLE_ORT_BACKEND"] = os.getenv("ENABLE_ORT_BACKEND", "OFF")
 setup_configs["ENABLE_OPENVINO_BACKEND"] = os.getenv("ENABLE_OPENVINO_BACKEND", "OFF")
-setup_configs["ENABLE_POROS_BACKEND"] = os.getenv("ENABLE_POROS_BACKEND", "OFF")
 setup_configs["ENABLE_TRT_BACKEND"] = os.getenv("ENABLE_TRT_BACKEND", "OFF")
-setup_configs["ENABLE_LITE_BACKEND"] = os.getenv("ENABLE_LITE_BACKEND", "OFF")
 setup_configs["ENABLE_VISION"] = os.getenv("ENABLE_VISION", "OFF")
 setup_configs["ENABLE_ENCRYPTION"] = os.getenv("ENABLE_ENCRYPTION", "OFF")
 setup_configs["ENABLE_FLYCV"] = os.getenv("ENABLE_FLYCV", "OFF")
@@ -72,12 +69,7 @@ setup_configs["ENABLE_TEXT"] = os.getenv("ENABLE_TEXT", "OFF")
 setup_configs["ENABLE_BENCHMARK"] = os.getenv("ENABLE_BENCHMARK", "OFF")
 # Hardware options
 setup_configs["WITH_GPU"] = os.getenv("WITH_GPU", "OFF")
-setup_configs["WITH_IPU"] = os.getenv("WITH_IPU", "OFF")
-setup_configs["WITH_OPENCL"] = os.getenv("WITH_OPENCL", "OFF")
-setup_configs["WITH_TIMVX"] = os.getenv("WITH_TIMVX", "OFF")
-setup_configs["WITH_DIRECTML"] = os.getenv("WITH_DIRECTML", "OFF")
 setup_configs["WITH_ASCEND"] = os.getenv("WITH_ASCEND", "OFF")
-setup_configs["WITH_KUNLUNXIN"] = os.getenv("WITH_KUNLUNXIN", "OFF")
 setup_configs["RKNN2_TARGET_SOC"] = os.getenv("RKNN2_TARGET_SOC", "")
 # Custom deps settings
 setup_configs["TRT_DIRECTORY"] = os.getenv("TRT_DIRECTORY", "UNDEFINED")
@@ -97,8 +89,6 @@ if setup_configs["RKNN2_TARGET_SOC"] != "" or setup_configs[
 if setup_configs["WITH_GPU"] == "ON" or setup_configs[
         "BUILD_ON_JETSON"] == "ON":
     wheel_name = "fastdeploy-gpu-python"
-elif setup_configs["WITH_IPU"] == "ON":
-    wheel_name = "fastdeploy-ipu-python"
 
 if os.getenv("CMAKE_CXX_COMPILER", None) is not None:
     setup_configs["CMAKE_CXX_COMPILER"] = os.getenv("CMAKE_CXX_COMPILER")

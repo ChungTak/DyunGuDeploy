@@ -26,22 +26,15 @@ PaddleClasModel::PaddleClasModel(const std::string& model_file,
                                  const RuntimeOption& custom_option,
                                  const ModelFormat& model_format)
     : preprocessor_(config_file) {
-  if (model_format == ModelFormat::ONNX) {
-    valid_cpu_backends = {Backend::OPENVINO, Backend::ORT,
-                          Backend::LITE};
+    if (model_format == ModelFormat::ONNX) {
+    valid_cpu_backends = {Backend::OPENVINO, Backend::ORT};
     valid_gpu_backends = {Backend::ORT, Backend::TRT};
-    valid_timvx_backends = {Backend::LITE};
-    valid_ascend_backends = {Backend::LITE};
-    valid_kunlunxin_backends = {Backend::LITE};
-    valid_ipu_backends = {};
-    valid_directml_backends = {Backend::ORT};
   } else if (model_format == ModelFormat::SOPHGO) {
     valid_sophgonpu_backends = {Backend::SOPHGOTPU};
   } else {
-    valid_cpu_backends = {Backend::ORT, Backend::OPENVINO};
+        valid_cpu_backends = {Backend::ORT, Backend::OPENVINO};
     valid_gpu_backends = {Backend::ORT, Backend::TRT};
     valid_rknpu_backends = {Backend::RKNPU2};
-    valid_directml_backends = {Backend::ORT};
     valid_horizon_backends = {Backend::HORIZONNPU};
   }
 

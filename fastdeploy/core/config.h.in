@@ -23,24 +23,12 @@
 #cmakedefine ENABLE_ORT_BACKEND
 #endif
 
-#ifndef ENABLE_POROS_BACKEND
-#cmakedefine ENABLE_POROS_BACKEND
-#endif
-
 #ifndef ENABLE_OPENVINO_BACKEND
 #cmakedefine ENABLE_OPENVINO_BACKEND
 #endif
 
 #ifndef WITH_GPU
 #cmakedefine WITH_GPU
-#endif
-
-#ifndef WITH_KUNLUNXIN
-#cmakedefine WITH_KUNLUNXIN
-#endif
-
-#ifndef WITH_DIRECTML
-#cmakedefine WITH_DIRECTML
 #endif
 
 #ifndef ENABLE_TRT_BACKEND
@@ -65,8 +53,4 @@
 
 #ifndef ENABLE_HORIZON_BACKEND
 #cmakedefine ENABLE_HORIZON_BACKEND
-#endif
-
-#ifndef ENABLE_TVM_BACKEND
-#cmakedefine ENABLE_TVM_BACKEND
 #endif

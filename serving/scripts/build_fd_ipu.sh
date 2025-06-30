@@ -31,9 +31,8 @@ docker run -it --rm --name build_fd_vison \
             apt-get install -y --no-install-recommends patchelf python3-dev python3-pip python3-setuptools build-essential;
             ln -s /usr/bin/python3 /usr/bin/python;
             pip3 install wheel;
-            export PATH=/workspace/fastdeploy/serving/cmake-3.18.6-Linux-x86_64/bin:$PATH;
+                        export PATH=/workspace/fastdeploy/serving/cmake-3.18.6-Linux-x86_64/bin:$PATH;
             export WITH_GPU=OFF;
-            export WITH_IPU=ON;
             export ENABLE_PADDLE_BACKEND=ON;
             export ENABLE_VISION=ON;
             python setup.py build;
@@ -50,7 +49,7 @@ docker run -it --rm --name build_fd_runtime \
             apt-get install -y --no-install-recommends python3-dev python3-pip build-essential;
             ln -s /usr/bin/python3 /usr/bin/python;
             export PATH=/workspace/fastdeploy/serving/cmake-3.18.6-Linux-x86_64/bin:$PATH;
-            cmake .. -DENABLE_ORT_BACKEND=OFF -DENABLE_TEXT=OFF -DENABLE_VISION=OFF -DBUILD_FASTDEPLOY_PYTHON=OFF -DENABLE_PADDLE_BACKEND=ON -DWITH_IPU=ON -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install -DLIBRARY_NAME=fastdeploy_runtime;
+                        cmake .. -DENABLE_ORT_BACKEND=OFF -DENABLE_TEXT=OFF -DENABLE_VISION=OFF -DBUILD_FASTDEPLOY_PYTHON=OFF -DENABLE_PADDLE_BACKEND=ON -DCMAKE_INSTALL_PREFIX=${PWD}/fastdeploy_install -DLIBRARY_NAME=fastdeploy_runtime;
             make -j`nproc`;
             make install"
 

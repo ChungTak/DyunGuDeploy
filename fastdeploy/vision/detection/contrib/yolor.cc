@@ -64,7 +64,7 @@ YOLOR::YOLOR(const std::string& model_file, const std::string& params_file,
     valid_cpu_backends = {Backend::ORT};
     valid_gpu_backends = {Backend::ORT, Backend::TRT};
   } else {
-    valid_cpu_backends = {Backend::ORT, Backend::OPENVINO, Backend::LITE};
+    valid_cpu_backends = {Backend::ORT, Backend::OPENVINO};
     valid_gpu_backends = {Backend::ORT, Backend::TRT};
   }
   runtime_option = custom_option;

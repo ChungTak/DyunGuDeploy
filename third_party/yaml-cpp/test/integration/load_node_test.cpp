@@ -282,8 +282,8 @@ TEST(NodeTest, SpecialFlow) {
       {"{:}", NodeType::Map, 1, "{~: ~}"},
       {"{a:}", NodeType::Map, 1, "{a: ~}"},
       {"{:a}", NodeType::Map, 1, "{:a: ~}"},
-      {"{,}", NodeType::Map, 1, "{~: ~}"},
-      {"{a:,}", NodeType::Map, 1, "{a: ~}"},
+      {"{}", NodeType::Map, 1, "{~: ~}"},
+      {"{a:}", NodeType::Map, 1, "{a: ~}"},
       //testcase for the trailing TAB of scalar
       {"key\t: value\t", NodeType::Map, 1, "key: value"},
       {"key\t: value\t #comment", NodeType::Map, 1, "key: value"},

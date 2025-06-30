@@ -87,7 +87,7 @@ __build_fastdeploy_android_shared() {
         -DANDROID_STL=${ANDROID_STL} \
         -DANDROID_TOOLCHAIN=${ANDROID_TOOLCHAIN} \
         -DENABLE_ORT_BACKEND=OFF \
-        -DENABLE_LITE_BACKEND=ON \
+        
         
         -DENABLE_FLYCV=ON \
         -DENABLE_TEXT=OFF \

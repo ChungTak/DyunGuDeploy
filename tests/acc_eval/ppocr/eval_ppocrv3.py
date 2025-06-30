@@ -63,8 +63,6 @@ def parse_arguments():
 
 def build_option(args):
     option = fd.RuntimeOption()
-    if args.device.lower() == "kunlunxin":
-        option.use_kunlunxin()
 
     if args.device.lower() == "ascend":
         option.use_ascend()

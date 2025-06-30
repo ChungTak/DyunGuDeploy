@@ -204,10 +204,10 @@ namespace testing {
 // Synopsis:
 // Range(start, end)
 //   - returns a generator producing a sequence of values {start, start+1,
-//     start+2, ..., }.
+//     start+2, ...}.
 // Range(start, end, step)
 //   - returns a generator producing a sequence of values {start, start+step,
-//     start+step+step, ..., }.
+//     start+step+step, ...}.
 // Notes:
 //   * The generated sequences never include end. For example, Range(1, 5)
 //     returns a generator producing a sequence {1, 2, 3, 4}. Range(1, 9, 2)

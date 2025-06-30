@@ -37,9 +37,9 @@ int main(int argc, char* argv[]) {
 
   // setup other option
   runtime_option.SetCpuThreadNum(12);
-  // use ONNX Runtime DirectML
+  // DirectML support has been removed, using CPU instead
   runtime_option.UseOrtBackend();
-  runtime_option.UseDirectML();
+  // runtime_option.UseDirectML(); // DEPRECATED: DirectML support removed
 
   // init runtime
   std::unique_ptr<fd::Runtime> runtime =

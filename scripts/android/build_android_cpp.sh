@@ -83,12 +83,10 @@ __build_fastdeploy_android_shared() {
         -DCMAKE_BUILD_TYPE=MinSizeRel \
         -DANDROID_ABI=${ANDROID_ABI} \
         -DANDROID_NDK=${ANDROID_NDK} \
-        -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
+                -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
         -DANDROID_STL=${ANDROID_STL} \
         -DANDROID_TOOLCHAIN=${ANDROID_TOOLCHAIN} \
         -DENABLE_ORT_BACKEND=OFF \
-        -DENABLE_LITE_BACKEND=ON \
-        
         -DENABLE_FLYCV=ON \
         -DENABLE_TEXT=OFF \
         -DENABLE_VISION=ON \

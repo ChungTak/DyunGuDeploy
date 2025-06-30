@@ -67,7 +67,7 @@ YOLOv5Face::YOLOv5Face(const std::string& model_file,
     valid_cpu_backends = {Backend::ORT};
     valid_gpu_backends = {Backend::ORT, Backend::TRT};
   } else {
-    valid_cpu_backends = {Backend::ORT, Backend::LITE};
+    valid_cpu_backends = {Backend::ORT};
     valid_gpu_backends = {Backend::ORT, Backend::TRT};
   }
   runtime_option = custom_option;

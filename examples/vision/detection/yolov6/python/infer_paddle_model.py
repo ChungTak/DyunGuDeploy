@@ -16,7 +16,7 @@ def parse_arguments():
         "--device",
         type=str,
         default='cpu',
-        help="Type of inference device, support 'cpu', 'kunlunxin' or 'gpu'.")
+        help="Type of inference device, support 'cpu', 'cpu' or 'gpu'.")
     return parser.parse_args()
 
 
@@ -25,8 +25,6 @@ def build_option(args):
     if args.device.lower() == "gpu":
         option.use_gpu(0)
 
-    if args.device.lower() == "kunlunxin":
-        option.use_kunlunxin()
 
     if args.device.lower() == "ascend":
         option.use_ascend()

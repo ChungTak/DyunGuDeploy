@@ -82,7 +82,7 @@ typedef eigen_packet_wrapper<__vector unsigned short int, 0> Packet8bf;
 
 // These constants are endian-agnostic
 static _EIGEN_DECLARE_CONST_FAST_Packet4f(ZERO, 0);  //{ 0.0, 0.0, 0.0, 0.0}
-static _EIGEN_DECLARE_CONST_FAST_Packet4i(ZERO, 0);  //{ 0, 0, 0, 0,}
+static _EIGEN_DECLARE_CONST_FAST_Packet4i(ZERO, 0);  //{ 0, 0, 0, 0}
 static _EIGEN_DECLARE_CONST_FAST_Packet4i(ONE, 1);   //{ 1, 1, 1, 1}
 static _EIGEN_DECLARE_CONST_FAST_Packet4i(MINUS16,
                                           -16);         //{ -16, -16, -16, -16}

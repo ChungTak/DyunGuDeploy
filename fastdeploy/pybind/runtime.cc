@@ -128,22 +128,17 @@ void BindRuntime(pybind11::module& m) {
       .def_readonly("option", &Runtime::option);
 
   pybind11::enum_<Backend>(m, "Backend", pybind11::arithmetic(),
-                           "Backend for inference.")
+                                 "Backend for inference.")
       .value("UNKOWN", Backend::UNKNOWN)
       .value("ORT", Backend::ORT)
       .value("TRT", Backend::TRT)
-      .value("POROS", Backend::POROS)
       .value("RKNPU2", Backend::RKNPU2)
-      .value("SOPHGOTPU", Backend::SOPHGOTPU)
-      .value("TVM", Backend::TVM)
-      .value("LITE", Backend::LITE);
+      .value("SOPHGOTPU", Backend::SOPHGOTPU);
   pybind11::enum_<ModelFormat>(m, "ModelFormat", pybind11::arithmetic(),
                                "ModelFormat for inference.")
-      .value("TORCHSCRIPT", ModelFormat::TORCHSCRIPT)
       .value("RKNN", ModelFormat::RKNN)
       .value("SOPHGO", ModelFormat::SOPHGO)
-      .value("ONNX", ModelFormat::ONNX)
-      .value("TVMFormat", ModelFormat::TVMFormat);
+      .value("ONNX", ModelFormat::ONNX);
   pybind11::enum_<Device>(m, "Device", pybind11::arithmetic(),
                           "Device for inference.")
       .value("CPU", Device::CPU)

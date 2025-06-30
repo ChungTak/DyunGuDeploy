@@ -34,10 +34,9 @@ Recognizer::Recognizer(const std::string& model_file,
     valid_gpu_backends = {Backend::ORT, Backend::TRT};
   } else {
     valid_cpu_backends = {Backend::ORT, Backend::OPENVINO,
-                          Backend::LITE};
+                          };
     valid_gpu_backends = {Backend::ORT, Backend::TRT};
-    valid_kunlunxin_backends = {Backend::LITE};
-    valid_ascend_backends = {Backend::LITE};
+    valid_ascend_backends = {};
     valid_sophgonpu_backends = {Backend::SOPHGOTPU};
     valid_rknpu_backends = {Backend::RKNPU2};
   }

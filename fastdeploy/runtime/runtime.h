@@ -94,14 +94,8 @@ struct FASTDEPLOY_DECL Runtime {
 
   void ReleaseModelMemoryBuffer();
 
-  RuntimeOption option;
+    RuntimeOption option;
 
-  /** \brief Compile TorchScript Module, only for Poros backend
-   *
-   * \param[in] prewarm_tensors Prewarm datas for compile
-   * \return true if compile successed, otherwise false
-   */
-  bool Compile(std::vector<std::vector<FDTensor>>& prewarm_tensors);
   /** \brief Get profile time of Runtime after the profile process is done.
    */
   double GetProfileTime() {
@@ -113,13 +107,10 @@ struct FASTDEPLOY_DECL Runtime {
  private:
   void CreateOrtBackend();
   void CreateTrtBackend();
-  void CreateOpenVINOBackend();
-  void CreateLiteBackend();
+    void CreateOpenVINOBackend();
   void CreateRKNPU2Backend();
   void CreateHorizonBackend();
   void CreateSophgoNPUBackend();
-  void CreatePorosBackend();
-  void CreateTVMBackend();
   std::unique_ptr<BaseBackend> backend_;
   std::vector<FDTensor> input_tensors_;
   std::vector<FDTensor> output_tensors_;

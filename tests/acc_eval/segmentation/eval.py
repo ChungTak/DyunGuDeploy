@@ -30,8 +30,6 @@ def build_option(args):
     if args.device.lower() == "gpu":
         option.use_gpu()
 
-    if args.device.lower() == "kunlunxin":
-        option.use_kunlunxin()
 
     if args.device.lower() == "ascend":
         option.use_ascend()
